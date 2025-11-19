@@ -627,7 +627,7 @@ MonoBehaviour:
   _gunAngleLimit:
     Min: -30
     Max: 45
-  _horRotateSpeed: 0.1
+  _horRotateSpeed: 2
   _vertRotateSpeed: 0.1
   <FirePoint>k__BackingField: {fileID: 4718076956673896773}
   _controller: {fileID: 4231104255282528649}
