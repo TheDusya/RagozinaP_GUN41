@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4379061412938284467}
   - component: {fileID: 4379061412938284466}
   - component: {fileID: 4379061412938284493}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GreyCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
