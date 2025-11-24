@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 1257427}
   - component: {fileID: 1257426}
   - component: {fileID: 1257425}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1415,7 +1415,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.000000027760466, y: 0.9880528, z: -0.15411603, w: 0.00000017797502}
+  m_LocalRotation: {x: 0.00000002245691, y: 0.9880528, z: -0.15411603, w: 0.0000001439734}
   m_LocalPosition: {x: -0.0000028152695, y: 4.6890006, z: 29.148003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3993,11 +3993,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1565981345, guid: 99be3cd157a838e4f9903a20e4ea6199, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017000787
+      value: 0.000000017000843
       objectReference: {fileID: 0}
     - target: {fileID: 1565981345, guid: 99be3cd157a838e4f9903a20e4ea6199, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000026517761
+      value: -0.0000000026517815
       objectReference: {fileID: 0}
     - target: {fileID: 5322992004360691109, guid: 99be3cd157a838e4f9903a20e4ea6199, type: 3}
       propertyPath: m_RootOrder
