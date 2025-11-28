@@ -1158,7 +1158,7 @@ MonoBehaviour:
   _slipLimit: 0.3
   _reverseMult: 0.4
   _maxSpeedFOV: 200
-  _fov: {x: 40, y: 40}
+  _fov: {x: 60, y: 60}
   _debugTorque: 0
 --- !u!82 &4231104255282528648
 AudioSource:
