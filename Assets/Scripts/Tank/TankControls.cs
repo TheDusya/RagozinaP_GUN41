@@ -154,6 +154,17 @@ namespace Tanks
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d6763540-2ae6-4cfb-a022-eeb5b02c84f1"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b9400577-badb-44b0-bc50-76eaf1dc1428"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
