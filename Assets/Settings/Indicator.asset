@@ -17,17 +17,17 @@ MonoBehaviour:
     Text: 
     Clip: {fileID: 0}
   - Mult: 2
-    Text: Eh...
-    Clip: {fileID: 0}
+    Text: OK
+    Clip: {fileID: 7400000, guid: a1774af4834f6ce429ee1e44e1aac49e, type: 2}
   - Mult: 3
     Text: Impressive.
-    Clip: {fileID: 0}
+    Clip: {fileID: 7400000, guid: fd1560e770eeeac42bc1eeaceff81c74, type: 2}
   - Mult: 4
     Text: Wow!
-    Clip: {fileID: 0}
+    Clip: {fileID: 7400000, guid: c1ddd1e4d2aff254d9c3b95dbc73ea38, type: 2}
   - Mult: 5
     Text: LETS GOO!
-    Clip: {fileID: 0}
+    Clip: {fileID: 7400000, guid: c02d9d15611d7b94283e31ae6b2db2ad, type: 2}
   - Mult: 6
     Text: CARNAGE!!!
-    Clip: {fileID: 0}
+    Clip: {fileID: 7400000, guid: ce2a7635eefd6ff48934d63d153e75c8, type: 2}

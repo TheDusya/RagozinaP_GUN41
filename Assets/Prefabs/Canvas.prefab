@@ -1622,6 +1622,7 @@ GameObject:
   - component: {fileID: 9206696901138621996}
   - component: {fileID: 9206696901138621998}
   - component: {fileID: 9206696901138621999}
+  - component: {fileID: 8907944087009724115}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -1746,6 +1747,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!111 &8907944087009724115
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206696901138621997}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: fd1560e770eeeac42bc1eeaceff81c74, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: a1774af4834f6ce429ee1e44e1aac49e, type: 2}
+  - {fileID: 7400000, guid: fd1560e770eeeac42bc1eeaceff81c74, type: 2}
+  - {fileID: 7400000, guid: c1ddd1e4d2aff254d9c3b95dbc73ea38, type: 2}
+  - {fileID: 7400000, guid: c02d9d15611d7b94283e31ae6b2db2ad, type: 2}
+  - {fileID: 7400000, guid: ce2a7635eefd6ff48934d63d153e75c8, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &9206696901265248714
 GameObject:
   m_ObjectHideFlags: 0
