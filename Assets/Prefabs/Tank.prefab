@@ -119,8 +119,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565981343}
-  m_LocalRotation: {x: 0.15411603, y: 0.000000017000835, z: -0.0000000026517821, w: 0.9880528}
-  m_LocalPosition: {x: -4.599806e-13, y: 3.8300004, z: -8.640001}
+  m_LocalRotation: {x: 0.15411612, y: 2.2304016e-14, z: -3.478973e-15, w: 0.9880528}
+  m_LocalPosition: {x: -4.599806e-13, y: 3.8300004, z: -8.639999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1125,6 +1125,7 @@ GameObject:
   - component: {fileID: 4231104255282528651}
   - component: {fileID: 4231104255282528648}
   - component: {fileID: 623441750338038603}
+  - component: {fileID: 6205237321752004460}
   m_Layer: 9
   m_Name: Tank
   m_TagString: Untagged
@@ -1389,6 +1390,19 @@ MonoBehaviour:
   _engineVolumeInterval: {x: 0.1, y: 0.7}
   _enginePitchInterval: {x: 0.6, y: 1.5}
   _maxTankSpeed: 110
+--- !u!114 &6205237321752004460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803938614593628692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e26ff9a27948a4b491c756ab3fdb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mult: 0.3
 --- !u!1 &6047850504230564236
 GameObject:
   m_ObjectHideFlags: 0
