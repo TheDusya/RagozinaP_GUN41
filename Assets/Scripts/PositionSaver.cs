@@ -16,13 +16,13 @@ namespace DefaultNamespace
 			public float Time;
 		}
 
-		[ReadOnly, Tooltip("This field can be filled through a context menu in Inspector via a \"Create File\" command.")]
+		[SerializeField, ReadOnly, Tooltip("This field can be filled through a context menu in Inspector via a \"Create File\" command.")]
 		private TextAsset _json;
 
 		[field: SerializeField, HideInInspector]
 		public List<Data> Records { get; private set; }
 
-		private void Awake()
+        private void Awake()
 		{
 				//todo comment: Что будет, если в теле этого условия не сделать выход из метода?
 			//Null reference exception.
@@ -80,16 +80,17 @@ namespace DefaultNamespace
 				var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
 				//Этой командой можно загрузить сам ассет
 				var asset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-				//todo comment: Для чего нужны эти проверки?
+					//todo comment: Для чего нужны эти проверки?
 				//мы ищем необходимый текстовый ассет.
-				//Ответный вопрос: пoчему мы не рассматриваем другие форматы? Если есть ассет Path.html, он перезапишется?
+				//Ответный вопрос: не является ли потенциальной проблемой то, что мы не рассматриваем другие форматы?
+				//Если есть ассет Path.html, он перезапишется.
 				if(asset != null && asset.name == "Path")
 				{
 					_json = asset;
 					UnityEditor.EditorUtility.SetDirty(this);
 					UnityEditor.AssetDatabase.SaveAssets();
 					UnityEditor.AssetDatabase.Refresh();
-					//todo comment: Почему мы здесь выходим, а не продолжаем итерироваться?
+						//todo comment: Почему мы здесь выходим, а не продолжаем итерироваться?
 					//нашли то, что хотели
 					return;
 				}
