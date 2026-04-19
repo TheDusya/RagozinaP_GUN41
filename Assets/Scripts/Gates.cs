@@ -9,13 +9,13 @@ public class Gates : MonoBehaviour
 {
     public int Score;
     private void IncreaseScore() => Score++;
-    private void WriteScore() => Console.WriteLine($"Your score is {Score}!");
+    private void WriteScore() => Debug.Log($"Your score is {Score}!");
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<Ball>(out _)) 
         {
-            other.enabled = false;
+            Destroy(other);
             IncreaseScore();
             WriteScore();
         }
