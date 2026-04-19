@@ -57,5 +57,13 @@ namespace Assets.Scripts
             }
             transform.position = end;
         }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            RecalculateEnds();
+            Gizmos.DrawWireSphere(globalStart, 0.3f);
+            Gizmos.DrawWireSphere(globalEnd, 0.3f);
+            Gizmos.DrawLine(globalStart, globalEnd);
+        }
     }
 }
