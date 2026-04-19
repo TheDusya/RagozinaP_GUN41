@@ -34,6 +34,9 @@ namespace Assets.Scripts
             RecalculateEnds();
             transform.position = globalStart;
             bool isForward = true;
+            if (_speed == 0)
+                while (true)
+                    yield return null;
             while (true) {
                 yield return StartCoroutine(OneWayMovement(isForward));
                 yield return new WaitForSeconds(_delay);
