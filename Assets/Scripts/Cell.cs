@@ -26,11 +26,8 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     public void OnPointerClick(PointerEventData eventData) => OnPointerClickEvent.Invoke(this);
     private void SetSelect(Material material)
     {
-        Select.GetComponent<MeshCollider>().enabled = true;
-        Select.GetComponent<Renderer>().material = material;
+        Select.GetOrAddComponent<MeshCollider>().enabled = true;
+        Select.GetOrAddComponent<Renderer>().material = material;
     }
-    private void ResetSelect()
-    {
-        Select.GetComponent<MeshCollider>().enabled = false;
-    }
+    private void ResetSelect() => Select.GetOrAddComponent<MeshCollider>().enabled = false;
 }
