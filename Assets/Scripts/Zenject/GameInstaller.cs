@@ -11,4 +11,5 @@ public class GameInstaller : MonoInstaller
         _controls = new Controls();
         Container.BindInstance(_controls.Game.Get()).WithId("Game").AsSingle();
     }
+    private void OnDestroy() => _controls.Dispose();
 }

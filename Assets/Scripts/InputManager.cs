@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     [Inject(Id = "Game")]
     InputActionMap actionMap;
     private InputAction _restart;
-    private void Start()
+    private void OnEnable()
     {
         if (actionMap == null)
         {
@@ -27,5 +27,4 @@ public class InputManager : MonoBehaviour
         
     }
     private void OnDisable() => actionMap?.Disable();
-    private void OnDestroy() => actionMap?.Dispose();
 }
