@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Zenject;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Inject(Id = "Game")]
+    InputActionMap actionMap;
+    private InputAction _restart;
+    private void Start()
+    {
+        if (actionMap == null)
+        {
+            Debug.LogError("No action map! Something is very wrong!");
+            return;
+        }
+        actionMap.Enable();
+        _restart = actionMap.actions.FirstOrDefault(action => action.name == "Restart");
+        if (_restart == null)
+            Debug.LogError("Input action for Restart not found!");
+    }
+    private void Update()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private void OnDisable() => actionMap?.Disable();
+    private void OnDestroy() => actionMap?.Dispose();
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,8 +16,23 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     public void OnPointerEnter(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
     public void OnPointerExit(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
     public void OnPointerClick(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
+    private void Start()
+    {
+        if (currentCell == null)
+            currentCell = FindObjectOfType<Cell>();
+        if (currentCell == null)
+            Debug.LogError("No cells found!");
+        InstantMove(currentCell);
+    }
+    private void InstantMove(Cell cell)
+    {
+        var thisPos = transform.position;
+        var cellPos = cell.transform.position;
+        thisPos.Set(cellPos.x, thisPos.y, cellPos.z);
+    }
     private void Move(Cell newCell)
     {
+        InstantMove(currentCell);
         StartCoroutine(DoMovement(newCell));
     }
     private IEnumerator DoMovement(Cell newCell)
