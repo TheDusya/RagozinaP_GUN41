@@ -1,11 +1,13 @@
+using System;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-    private Controls _controls;
+    Controls _controls;
     public override void InstallBindings()
     {
         _controls = new Controls();
