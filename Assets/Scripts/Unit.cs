@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
@@ -11,17 +10,16 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     Cell currentCell;
     [SerializeField]
     private float _speed = 1f;
+    [Inject(Id = "CellManager")]
+    CellManager _cellManager;
     public static event Action OnMoveEndCallback;
 
     public void OnPointerEnter(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
-    public void OnPointerExit(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
-    public void OnPointerClick(PointerEventData eventData) => currentCell.OnPointerEnter(eventData);
+    public void OnPointerExit(PointerEventData eventData) => currentCell.OnPointerExit(eventData);
+    public void OnPointerClick(PointerEventData eventData) => currentCell.OnPointerClick(eventData);
     private void Start()
     {
-        if (currentCell == null)
-            currentCell = FindObjectOfType<Cell>();
-        if (currentCell == null)
-            Debug.LogError("No cells found!");
+        currentCell = _cellManager.GetCell(this);
         InstantMove(currentCell);
     }
     private void InstantMove(Cell cell)
@@ -30,7 +28,7 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
         var cellPos = cell.transform.position;
         thisPos.Set(cellPos.x, thisPos.y, cellPos.z);
     }
-    private void Move(Cell newCell)
+    private void Move(Cell newCell) //questionable
     {
         InstantMove(currentCell);
         StartCoroutine(DoMovement(newCell));

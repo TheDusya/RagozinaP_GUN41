@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    public static event Action<Cell> OnPointerClickEvent;
+    public event Action<Cell> OnPointerClickEvent;
     private enum Plane { Select, Focus };
     Dictionary<Plane, GameObject> _planes;
     private GameObject Select => _planes[Plane.Select];

@@ -546,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _restartCanvas: {fileID: 118273031}
   _progressBar: {fileID: 139040246}
+  _cellPalette: {fileID: 11400000, guid: 0cd402586fbe879498877e296a1ce106, type: 2}
 --- !u!114 &1361493110
 MonoBehaviour:
   m_ObjectHideFlags: 0

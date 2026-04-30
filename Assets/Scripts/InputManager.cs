@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -44,7 +43,7 @@ public class InputManager : MonoBehaviour
     }
     private void Update()
     {
-        if (_restart.IsInProgress()) //!
+        if (_restart.IsInProgress())
         {
             _canvas.enabled = true;
             _canvas.gameObject.SetActive(true);
