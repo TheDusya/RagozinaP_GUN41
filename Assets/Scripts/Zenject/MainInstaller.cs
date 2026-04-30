@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -9,6 +10,8 @@ public class MainInstaller : MonoInstaller
     Canvas _restartCanvas;
     [SerializeField]
     GameObject _progressBar;
+    [SerializeField]
+    CellPaletteSettings _cellPalette;
     public override void InstallBindings()
     {
         if (gameObject.TryGetComponent<SceneController>(out var sceneController))
@@ -18,6 +21,7 @@ public class MainInstaller : MonoInstaller
         FillCanvas();
         Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
         Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
+        Container.BindInstance(_cellPalette).AsSingle();
 
     }
     private void FillCanvas()
