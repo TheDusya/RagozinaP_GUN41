@@ -21,7 +21,6 @@ public class MainInstaller : MonoInstaller
         Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
         Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
         Container.BindInstance(_cellPalette).AsSingle();
-
     }
     private void FillCanvas()
     {
