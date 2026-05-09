@@ -20,13 +20,16 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
             else
                 Debug.LogError($"{plane} plane not found!");
     }
-    public void OnPointerEnter(PointerEventData eventData) => Focus.GetOrAddComponent<MeshCollider>().enabled = true;
-    public void OnPointerExit(PointerEventData eventData) => Focus.GetOrAddComponent<MeshCollider>().enabled = false;
-    public void OnPointerClick(PointerEventData eventData) => OnPointerClickEvent.Invoke(this);
+    public void OnPointerEnter(PointerEventData eventData) => Focus.GetOrAddComponent<MeshRenderer>().enabled = true;
+    public void OnPointerExit(PointerEventData eventData) => Focus.GetOrAddComponent<MeshRenderer>().enabled = false;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        OnPointerClickEvent?.Invoke(this);
+    }
     private void SetSelect(Material material)
     {
-        Select.GetOrAddComponent<MeshCollider>().enabled = true;
         Select.GetOrAddComponent<Renderer>().material = material;
+        Select.GetOrAddComponent<MeshRenderer>().enabled = true;
     }
-    private void ResetSelect() => Select.GetOrAddComponent<MeshCollider>().enabled = false;
+    private void ResetSelect() => Select.GetOrAddComponent<MeshRenderer>().enabled = false;
 }

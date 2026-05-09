@@ -864,7 +864,23 @@ MonoBehaviour:
   popupVisibilityLogFilter: -1
   startMinimized: 1
   toggleWithKey: 1
-  toggleKey: 96
+  toggleBinding:
+    m_Name: Toggle Binding
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 56b4e225-8599-4244-ba1f-de3e82a82ba2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cce891cb-e797-479c-8be6-2bffbb244141
+      m_Path: <Keyboard>/backquote
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Toggle Binding
+      m_Flags: 0
+    m_Flags: 0
   enableSearchbar: 1
   topSearchbarMinWidth: 360
   copyAllLogsOnResizeButtonClick: 0
