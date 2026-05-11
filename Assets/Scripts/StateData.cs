@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
-    internal class StateData
+    public class StateData
     {
-        Team currentPlayer;
-
+        public Team CurrentPlayer;
+        public State CurrentState;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+public class SceneInstaller : MonoInstaller
 {
     [SerializeField]
     Canvas _restartCanvas;

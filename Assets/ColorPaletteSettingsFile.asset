@@ -17,4 +17,6 @@ MonoBehaviour:
   <AttackCell>k__BackingField: {fileID: 2100000, guid: 473b2bd1c0bd6374b92a2638f5757369, type: 2}
   <MoveAndAttackCell>k__BackingField: {fileID: 2100000, guid: 71a2f919563291345b60cb67937c8a0b, type: 2}
   <Team1Material>k__BackingField: {fileID: 2100000, guid: 8c9ace927b0feb24fbdb78ea1c493bf1, type: 2}
+  <Team1TransparentMaterial>k__BackingField: {fileID: 2100000, guid: c8d01e2da14715940981753ca4c7f382, type: 2}
   <Team2Material>k__BackingField: {fileID: 2100000, guid: 8ba02c2d95616354eac7205594cc5595, type: 2}
+  <Team2TransparentMaterial>k__BackingField: {fileID: 2100000, guid: 684d698259663c344ba78a28bea85c1a, type: 2}
