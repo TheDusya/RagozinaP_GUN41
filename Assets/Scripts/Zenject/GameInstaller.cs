@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -22,11 +23,11 @@ public class GameInstaller : MonoInstaller
         _controls = new Controls();
         FillCanvas();
         Container.BindInstance(_controls.Game.Get()).WithId("Game").AsSingle();
-        _cellManager = gameObject.AddComponent<CellManager>();
+        _cellManager = gameObject.GetOrAddComponent<CellManager>();
         Container.BindInstance(_cellManager).WithId("CellManager").AsSingle();
         Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
         Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
-        Container.BindInstance(_cellPalette).AsSingle();
+        Container.BindInstance(_cellPalette).WithId("CellPalette").AsSingle();
     }
     private void FillCanvas()
     {

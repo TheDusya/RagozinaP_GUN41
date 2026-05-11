@@ -11,6 +11,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     Dictionary<Plane, GameObject> _planes;
     private GameObject Select => _planes[Plane.Select];
     private GameObject Focus => _planes[Plane.Focus];
+    public Unit Unit {get; set;}
     void Start()
     {
         _planes = new Dictionary<Plane, GameObject>();
@@ -22,11 +23,8 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     }
     public void OnPointerEnter(PointerEventData eventData) => Focus.GetOrAddComponent<MeshRenderer>().enabled = true;
     public void OnPointerExit(PointerEventData eventData) => Focus.GetOrAddComponent<MeshRenderer>().enabled = false;
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        OnPointerClickEvent?.Invoke(this);
-    }
-    private void SetSelect(Material material)
+    public void OnPointerClick(PointerEventData eventData) => OnPointerClickEvent?.Invoke(this);
+    public void SetSelect(Material material)
     {
         Select.GetOrAddComponent<Renderer>().material = material;
         Select.GetOrAddComponent<MeshRenderer>().enabled = true;

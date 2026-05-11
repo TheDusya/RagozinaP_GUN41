@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class CellManager : MonoBehaviour
 {
     private Cell[] _cells;
-    public Action<Cell> OnCellClicked;
     public Dictionary<Cell, Dictionary<NeighbourType, Cell>> _neighbours;
+    [Inject(Id = "CellPalette")]
+    private CellPaletteSettings cellPalette;
     void Awake()
     {
         _cells = FindObjectsOfType<Cell>();
@@ -59,4 +61,5 @@ public class CellManager : MonoBehaviour
         var position = unit.transform.position;
         return _cells.OrderBy(el => (el.transform.position - position).sqrMagnitude).FirstOrDefault();
     }
+    public void OnCellClicked(Cell cell) => cell.SetSelect(cellPalette.SelectCell);
 }

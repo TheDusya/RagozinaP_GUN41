@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     public void OnPointerClick(PointerEventData eventData) => currentCell.OnPointerClick(eventData);
     private void Start()
     {
-        currentCell = _cellManager.GetCell(this);
+        SetCell(_cellManager.GetCell(this));
         InstantMove(currentCell);
     }
     private void InstantMove(Cell cell)
@@ -47,7 +47,14 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
             yield return null;
         }
         transform.position = end;
-        currentCell = newCell;
+        SetCell(newCell);
         OnMoveEndCallback.Invoke();
+    }
+    private void SetCell(Cell cell)
+    {
+        if (currentCell != null)
+            currentCell.Unit = null;
+        currentCell = cell;
+        currentCell.Unit = this;
     }
 }
