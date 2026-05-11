@@ -18,10 +18,6 @@ public class SceneInstaller : MonoInstaller
     Controls _controls;
     public override void InstallBindings()
     {
-        if (gameObject.TryGetComponent<SceneController>(out var sceneController))
-            Container.Bind<SceneController>().FromInstance(sceneController).AsSingle();
-        else
-            Debug.LogError("Scene controller component not found!");
         _controls = new Controls();
         FillCanvas();
         Container.BindInstance(_controls.Game.Get()).WithId("Game").AsSingle();

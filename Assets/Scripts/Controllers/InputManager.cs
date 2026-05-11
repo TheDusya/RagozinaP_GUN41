@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
@@ -13,8 +14,6 @@ public class InputManager : MonoBehaviour
     Canvas _canvas;
     [Inject(Id = "ProgressBar")]
     Image _progressBar;
-    [Inject]
-    SceneController _sceneController;
 
     [SerializeField, Min(10f)]
     float _fillingSpeed = 100f;
@@ -37,8 +36,6 @@ public class InputManager : MonoBehaviour
             throw new Exception("No restart canvas found");
         if (_progressBar == null)
             throw new Exception("No progress bar found");
-        if (_sceneController == null)
-            throw new Exception("No scene controller found");
 
     }
     private void Update()
@@ -52,7 +49,7 @@ public class InputManager : MonoBehaviour
                 _progressBar.fillAmount = progress;
             else
             {
-                _sceneController.ReloadGameScene();
+                SceneManager.LoadScene(0);
                 _progressBar.fillAmount = 0;
                 _canvas.enabled = false;
             }
