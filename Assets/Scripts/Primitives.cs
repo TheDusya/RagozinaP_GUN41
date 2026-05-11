@@ -1,2 +1,3 @@
-public enum NeighbourType { TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, TOP_LEFT}
+public enum NeighbourType { Top, TopRight, Right, BottomRight, Bottom, BottomLeft, Left, TopLeft}
 public enum Team { Player1, Player2 }
+public enum State { ChoosingUnit, ChoosingCell, Lock }

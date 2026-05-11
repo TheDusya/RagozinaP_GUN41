@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff1623f3ab3c038429f5046b44aa18f4, type: 3}
-  m_Name: CellPaletteSettingsFile
+  m_Name: ColorPaletteSettingsFile
   m_EditorClassIdentifier: 
   <SelectCell>k__BackingField: {fileID: 2100000, guid: 1a8721acbad02184faa642460ca3d342, type: 2}
   <MoveCell>k__BackingField: {fileID: 2100000, guid: 5440e3875e8ec694aa8e3b3e10c8c10d, type: 2}
   <AttackCell>k__BackingField: {fileID: 2100000, guid: 473b2bd1c0bd6374b92a2638f5757369, type: 2}
   <MoveAndAttackCell>k__BackingField: {fileID: 2100000, guid: 71a2f919563291345b60cb67937c8a0b, type: 2}
+  <Team1Material>k__BackingField: {fileID: 2100000, guid: 8c9ace927b0feb24fbdb78ea1c493bf1, type: 2}
+  <Team2Material>k__BackingField: {fileID: 2100000, guid: 8ba02c2d95616354eac7205594cc5595, type: 2}

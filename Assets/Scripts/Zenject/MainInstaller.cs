@@ -10,7 +10,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField]
     GameObject _progressBar;
     [SerializeField]
-    CellPaletteSettings _cellPalette;
+    ColorPaletteSettings _cellPalette;
     public override void InstallBindings()
     {
         if (gameObject.TryGetComponent<SceneController>(out var sceneController))

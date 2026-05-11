@@ -11,8 +11,10 @@ public class GameInstaller : MonoInstaller
     [SerializeField]
     GameObject _progressBar;
     [SerializeField]
-    CellPaletteSettings _cellPalette;
-    private CellManager _cellManager;
+    ColorPaletteSettings _colorPalette;
+    [SerializeField]
+    GameObject divider;
+    private Battlefield _battlefield;
     Controls _controls;
     public override void InstallBindings()
     {
@@ -23,11 +25,12 @@ public class GameInstaller : MonoInstaller
         _controls = new Controls();
         FillCanvas();
         Container.BindInstance(_controls.Game.Get()).WithId("Game").AsSingle();
-        _cellManager = gameObject.GetOrAddComponent<CellManager>();
-        Container.BindInstance(_cellManager).WithId("CellManager").AsSingle();
+        _battlefield = gameObject.GetOrAddComponent<Battlefield>();
+        _battlefield.SetDivider(divider);
+        Container.BindInstance(_battlefield).WithId("Battlefield").AsSingle();
         Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
         Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
-        Container.BindInstance(_cellPalette).WithId("CellPalette").AsSingle();
+        Container.BindInstance(_colorPalette).WithId("ColorPalette").AsSingle();
     }
     private void FillCanvas()
     {
