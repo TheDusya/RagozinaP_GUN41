@@ -26,7 +26,7 @@ public class Battlefield : MonoBehaviour
     {
         InitCells();
         InitUnits();
-        _dataManager.OnGameEvent += InstantMove;
+        _dataManager.OnGameEvent += ProcessEvent;
     }
 
     private void InitCells()
@@ -90,18 +90,17 @@ public class Battlefield : MonoBehaviour
             InitUnit(unit);
             InstantMove(unit, cell);
         }
+        RecountAccess();
     }
 
-    private void InstantMove(GameEvent gameEvent)
+    private void ProcessEvent(GameEvent gameEvent)
     {
-        if (gameEvent != GameEvent.MovementStart && gameEvent != GameEvent.MovementEnd)
-            return;
-        if (_dataManager.Cell == null)
-            Debug.LogError("Battlefield: Cell does not exist!");
-        else if (_dataManager.Unit == null)
-            Debug.LogError("Battlefield: Cell does not have a unit to move!");
-        else
+        if (gameEvent == GameEvent.MovementEnd)
+        {
             InstantMove(_dataManager.Unit, _dataManager.Cell);
+            _dataManager.Cell.ResetSelect();
+            RecountAccess();
+        }
     }
 
     private void InstantMove(Unit unit, Cell cell)
@@ -117,7 +116,6 @@ public class Battlefield : MonoBehaviour
             unit.CurrentCell.CurrentUnit = null;
         unit.CurrentCell = cell;
         cell.CurrentUnit = unit;
-        _assessibleCells[unit] = GetAccessibleFrom(cell, unit);
     }
 
     public NeighbourType? GetNeighbourType(Vector3 source, Vector3 target, float oneCellDistance)
@@ -179,16 +177,23 @@ public class Battlefield : MonoBehaviour
                     nextNeighbour = null; //we can't jump over
             }
         }
-        return result;
+        var attackResult = (result.Where(val => val.Value != null)).ToDictionary(el => el.Key, el => el.Value);
+        if (attackResult.Any()) //we have to attack
+            return attackResult;
+        else
+            return result;
     }
 
     private Dictionary<Cell, Unit> GetAccessibleFromSimpleChecker(Cell cell, Team team)
     {
         var result = new Dictionary<Cell, Unit>();
-        NeighbourType[] types = (team == Team.Player1) ?
+        NeighbourType[] ourTypes = (team == Team.Player1) ?
             new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
             new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
-        foreach (var neighbourType in types)
+        NeighbourType[] backwardTypes = (team == Team.Player2) ?
+            new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
+            new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
+        foreach (var neighbourType in ourTypes)
         {
             if (_neighbours[cell].TryGetValue(neighbourType, out var neighbour))
                 if (neighbour.CurrentUnit == null)
@@ -197,7 +202,24 @@ public class Battlefield : MonoBehaviour
                     if (newNeighbour.CurrentUnit == null)
                         result.Add(newNeighbour, neighbour.CurrentUnit);
         }
-        return result;
+        foreach (var neighbourType in backwardTypes)
+        {
+            if (_neighbours[cell].TryGetValue(neighbourType, out var neighbour) && neighbour.CurrentUnit != null)
+                if (neighbour.CurrentUnit.Team != team && neighbour != null && _neighbours[neighbour].TryGetValue(neighbourType, out var newNeighbour))
+                    if (newNeighbour.CurrentUnit == null)
+                        result.Add(newNeighbour, neighbour.CurrentUnit);
+        }
+        var attackResult = (result.Where(val => val.Value != null)).ToDictionary(el => el.Key, el => el.Value);
+        if (attackResult.Any()) //we have to attack
+            return attackResult;
+        else
+            return result;
+    }
+    private void RecountAccess()
+    {
+        foreach (var unit in _units)
+            _assessibleCells[unit] = GetAccessibleFrom(unit.CurrentCell, unit);
+        //TODO: force you to attack;
     }
 
     public void OnDestroy()

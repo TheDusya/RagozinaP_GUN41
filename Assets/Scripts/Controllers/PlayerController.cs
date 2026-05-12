@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
                 _time = 0;
                 break;
             case GameEvent.Attack:
-                Destroy(_dataManager.AttackedUnit);
+                Destroy(_dataManager.AttackedUnit.gameObject);
                 break;
         }
     }
@@ -59,6 +59,6 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        _dataManager.OnGameEvent += ProcessEvent;
+        _dataManager.OnGameEvent -= ProcessEvent;
     }
 }
