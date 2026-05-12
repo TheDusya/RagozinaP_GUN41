@@ -12,7 +12,7 @@ public class Battlefield : MonoBehaviour
     private Cell[] _cells;
     private Unit[] _units;
     public Dictionary<Cell, Dictionary<NeighbourType, Cell>> _neighbours;
-    [Inject(Id = "ColorPalette")]
+    [Inject]
     private ColorPaletteSettings colorPalette;
     [SerializeField]
     private float _movementSpeed = 1f;

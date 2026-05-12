@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,13 +21,15 @@ public class SceneInstaller : MonoInstaller
     {
         _controls = new Controls();
         FillCanvas();
-        Container.BindInstance(_controls.Game.Get()).WithId("Game").AsSingle();
+        Container.BindInstance(_controls.Game.Get()).AsSingle();
         _battlefield = gameObject.GetOrAddComponent<Battlefield>();
         _battlefield.SetDivider(divider);
-        Container.BindInstance(_battlefield).WithId("Battlefield").AsSingle();
+        SharedDataManager sharedData = new(); 
+        Container.BindInstance(sharedData).AsSingle();
+        Container.BindInstance(_battlefield).AsSingle();
+        Container.BindInstance(_colorPalette).AsSingle();
         Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
         Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
-        Container.BindInstance(_colorPalette).WithId("ColorPalette").AsSingle();
     }
     private void FillCanvas()
     {
