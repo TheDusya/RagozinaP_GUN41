@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,24 +7,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Battlefield : MonoBehaviour
 {
     private Cell[] _cells;
     private Unit[] _units;
-    public Dictionary<Cell, Dictionary<NeighbourType, Cell>> _neighbours;
+    private Dictionary<Cell, Dictionary<NeighbourType, Cell>> _neighbours;
+    private Dictionary<Unit, Dictionary<Cell, Unit>> _assessibleCells; //unit is the attacked checker, unit == null -> move without an attack
+    private Vector3 _divider; //more complex divider may be created for more teams
+
     [Inject]
     private ColorPaletteSettings colorPalette;
-    [SerializeField]
-    private float _movementSpeed = 1f;
-    private Vector3 _divider; //more complex divider may be created for more teams
-    public static event Action OnMoveBegin;
-    public static event Action OnMoveEnd;
+    [Inject]
+    SharedDataManager _dataManager;
 
     void Awake()
     {
         InitCells();
         InitUnits();
+        _dataManager.OnGameEvent += InstantMove;
     }
 
     private void InitCells()
@@ -35,7 +38,6 @@ public class Battlefield : MonoBehaviour
         for (int i = 0; i < _cells.Length; i++)
         {
             var currCell = _cells[i];
-            //InitUnitOnCell(currCell);
             _neighbours[currCell] = new Dictionary<NeighbourType, Cell>();
             currCell.OnPointerClickEvent += OnCellClicked;
             for (int j = 0; j < _cells.Length; j++)
@@ -50,8 +52,37 @@ public class Battlefield : MonoBehaviour
         }
     }
 
+    public void OnCellClicked(Cell cell)
+    {
+        if (_dataManager.CurrentState == State.ChoosingUnit && cell.CurrentUnit != null && _dataManager.CurrentPlayer == cell.CurrentUnit.Team)
+            SelectUnit(cell.CurrentUnit);
+        else if (_dataManager.CurrentState == State.ChoosingCell && _dataManager.Unit != null)
+            SelectCell(cell);
+    }
+    private void SelectUnit(Unit unit)
+    {
+        var accessible = _assessibleCells[unit];
+        _dataManager.SelectUnit(unit);
+        foreach (var cell in _cells)
+            if (accessible.ContainsKey(cell))
+                cell.SetSelect(accessible[cell] ? colorPalette.AttackCell : colorPalette.SelectCell);
+            else
+                cell.ResetSelect();
+    }
+    private void SelectCell(Cell cell)
+    {
+        var acessibleForUnit = _assessibleCells[_dataManager.Unit];
+        if (!acessibleForUnit.TryGetValue(cell, out var isAttack))
+            return;
+        _dataManager.SelectCell(cell, isAttack);
+        foreach (var acessibleCell in acessibleForUnit.Keys)
+            if (acessibleCell != cell)
+                acessibleCell.ResetSelect();
+    }
+
     private void InitUnits()
     {
+        _assessibleCells = new();
         _units = FindObjectsOfType<Unit>();
         foreach (var unit in _units)
         {
@@ -61,6 +92,18 @@ public class Battlefield : MonoBehaviour
         }
     }
 
+    private void InstantMove(GameEvent gameEvent)
+    {
+        if (gameEvent != GameEvent.MovementStart && gameEvent != GameEvent.MovementEnd)
+            return;
+        if (_dataManager.Cell == null)
+            Debug.LogError("Battlefield: Cell does not exist!");
+        else if (_dataManager.Unit == null)
+            Debug.LogError("Battlefield: Cell does not have a unit to move!");
+        else
+            InstantMove(_dataManager.Unit, _dataManager.Cell);
+    }
+
     private void InstantMove(Unit unit, Cell cell)
     {
         var thisPos = transform.position;
@@ -68,35 +111,13 @@ public class Battlefield : MonoBehaviour
         thisPos.Set(cellPos.x, thisPos.y, cellPos.z);
         SetCell(unit, cell);
     }
-    private void Move(Unit unit, Cell newCell) //questionable
-    {
-        InstantMove(unit, unit.CurrentCell);
-        StartCoroutine(DoMovement(unit, newCell));
-    }
-    private IEnumerator DoMovement(Unit unit, Cell newCell)
-    {
-        OnMoveBegin.Invoke();
-        var start = unit.transform.position;
-        var end = newCell.transform.position;
-        var duration = Vector3.Distance(start, end) / _movementSpeed;
-        var elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            var res = Vector3.MoveTowards(transform.position, end, _movementSpeed * Time.deltaTime);
-            unit.transform.position = res;
-            yield return null;
-        }
-        unit.transform.position = end;
-        SetCell(unit, newCell);
-        OnMoveEnd.Invoke();
-    }
     public void SetCell(Unit unit, Cell cell)
     {
         if (unit.CurrentCell != null)
-            unit.CurrentCell.CurrentUnit = null; //sorry for this monstrosity
+            unit.CurrentCell.CurrentUnit = null;
         unit.CurrentCell = cell;
         cell.CurrentUnit = unit;
+        _assessibleCells[unit] = GetAccessibleFrom(cell, unit);
     }
 
     public NeighbourType? GetNeighbourType(Vector3 source, Vector3 target, float oneCellDistance)
@@ -104,23 +125,80 @@ public class Battlefield : MonoBehaviour
         var xDist = source.x - target.x;
         var zDist = source.z - target.z;
         if (Math.Abs(xDist) > oneCellDistance || Math.Abs(zDist) > oneCellDistance)
-        return null;
+            return null;
         NeighbourType? type = (Math.Sign(zDist), Math.Sign(xDist)) switch
         {
             (1, 1) => NeighbourType.TopRight,
-            (1, 0) => NeighbourType.Top,
             (1, -1) => NeighbourType.TopLeft,
-            (0, 1) => NeighbourType.Right,
-            (0, -1) => NeighbourType.Left,
             (-1, 1) => NeighbourType.BottomRight,
-            (-1, 0) => NeighbourType.Bottom,
             (-1, -1) => NeighbourType.BottomLeft,
             _ => null
         };
         return type;
     }
 
-    public void SetDivider (GameObject divider) => _divider = divider.transform.position;
+    public void SetDivider(GameObject divider) => _divider = divider.transform.position;
+    public Cell GetCell(Unit unit) => _cells.OrderBy(el => (el.transform.position - unit.transform.position).sqrMagnitude).FirstOrDefault();
+    private void InitUnit(Unit unit)
+    {
+        unit.IsQueen = false;
+        var team = GetTeam(unit.transform.position);
+        unit.Team = team;
+        unit.SetMaterials(colorPalette.GetTeamMaterial(team), colorPalette.GetTeamTransparenMaterial(team));
+    }
+    private Team GetTeam(Vector3 position) => position.z < _divider.z ? Team.Player1 : Team.Player2;
+    private Dictionary<Cell, Unit> GetAccessibleFrom(Cell cell, Unit unit) //Im sorry for these functions
+    {
+        if (unit.IsQueen)
+            return GetAccessibleFromQueen(cell, unit.Team);
+        else
+            return GetAccessibleFromSimpleChecker(cell, unit.Team);
+    }
+
+    private Dictionary<Cell, Unit> GetAccessibleFromQueen(Cell cell, Team team)
+    {
+        var result = new Dictionary<Cell, Unit>();
+        foreach (var objectNeighbourType in Enum.GetValues(typeof(NeighbourType)))
+        {
+            var neighbourType = (NeighbourType)objectNeighbourType;
+            _neighbours[cell].TryGetValue(neighbourType, out var nextNeighbour);
+            while (nextNeighbour != null)
+            {
+                _neighbours[nextNeighbour].TryGetValue(neighbourType, out var newNeighbour);
+                if (nextNeighbour.CurrentUnit == null)
+                {
+                    result.Add(nextNeighbour, null);
+                    nextNeighbour = newNeighbour;
+                }
+                else if (nextNeighbour.CurrentUnit.Team != team && newNeighbour != null && newNeighbour.CurrentUnit == null) //jumping over the enemy checker
+                {
+                    result.Add(newNeighbour, nextNeighbour.CurrentUnit);
+                    nextNeighbour = null;
+                }
+                else
+                    nextNeighbour = null; //we can't jump over
+            }
+        }
+        return result;
+    }
+
+    private Dictionary<Cell, Unit> GetAccessibleFromSimpleChecker(Cell cell, Team team)
+    {
+        var result = new Dictionary<Cell, Unit>();
+        NeighbourType[] types = (team == Team.Player1) ?
+            new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
+            new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
+        foreach (var neighbourType in types)
+        {
+            if (_neighbours[cell].TryGetValue(neighbourType, out var neighbour))
+                if (neighbour.CurrentUnit == null)
+                    result.Add(neighbour, null);
+                else if (neighbour.CurrentUnit.Team != team && neighbour != null && _neighbours[neighbour].TryGetValue(neighbourType, out var newNeighbour))
+                    if (newNeighbour.CurrentUnit == null)
+                        result.Add(newNeighbour, neighbour.CurrentUnit);
+        }
+        return result;
+    }
 
     public void OnDestroy()
     {
@@ -132,15 +210,4 @@ public class Battlefield : MonoBehaviour
         _neighbours.Clear();
     }
 
-    public Cell GetCell(Unit unit) =>  _cells.OrderBy(el => (el.transform.position - unit.transform.position).sqrMagnitude).FirstOrDefault();
-    public void OnCellClicked(Cell cell) => cell.SetSelect(colorPalette.SelectCell);
-    private void InitUnit(Unit unit)
-    {
-        unit.IsQueen = false;
-        var team = GetTeam(unit.transform.position);
-        unit.Team = team;
-        unit.SetMaterials(colorPalette.GetTeamMaterial(team), colorPalette.GetTeamTransparenMaterial(team));
-    }
-
-    private Team GetTeam(Vector3 position) => position.z < _divider.z ? Team.Player1 : Team.Player2;
 }

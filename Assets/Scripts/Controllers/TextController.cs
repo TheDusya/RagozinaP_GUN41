@@ -10,18 +10,27 @@ public class TextController : MonoBehaviour
 {
     [Inject]
     SharedDataManager _dataManager;
-    private const string _player1Text = "Player1, go!";
-    private const string _player2Text = "Player2, go!";
+    private const string _player1Text = "Player 1, go!";
+    private const string _player2Text = "Player 2, go!";
     private const string _confirmText = "Are you sure?\n[Press Space to confirm]";
     private TextMeshProUGUI _text;
     private void Awake()
     {
-        _dataManager.OnNextPlayer += WritePlayerText;
-        _dataManager.OnWaitForConfirm += WriteConfirmText;
+        _dataManager.OnGameEvent += TextAction;
         _text = gameObject.GetComponent<TextMeshProUGUI>();
         _text.fontSize = 120;
         _text.text = _player1Text;
     }
+
+    private void TextAction(GameEvent gameEvent)
+    {
+        switch (gameEvent) {
+            case GameEvent.NewTurn: WritePlayerText();
+                break;
+            case GameEvent.SelectCell: WriteConfirmText(); 
+                break;
+        }
+    }   
 
     private void WritePlayerText()
     {
@@ -41,7 +50,6 @@ public class TextController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _dataManager.OnNextPlayer -= WritePlayerText;
-        _dataManager.OnWaitForConfirm -= WriteConfirmText;
+        _dataManager.OnGameEvent -= TextAction;
     }
 }

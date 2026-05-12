@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
+using static UnityEngine.InputSystem.InputAction;
 
 public class BattleController : MonoBehaviour
 {
@@ -16,19 +17,23 @@ public class BattleController : MonoBehaviour
     [Inject(Id = "ProgressBar")]
     Image _progressBar;
     [Inject]
-    SharedDataManager _data;
+    SharedDataManager _dataManager;
 
     [SerializeField, Min(10f)]
     float _fillingSpeed = 100f;
 
     private InputAction _restart;
+    private InputAction _confirm;
+    private InputAction _cancel;
     private void OnEnable()
     {
         CheckEverything();
         _actionMap.Enable();
         _restart = _actionMap.actions.FirstOrDefault(action => action.name == "Restart");
-        if (_restart == null)
-            throw new Exception("No action for restart! Something is very, very wrong!");
+        _confirm = _actionMap.actions.FirstOrDefault(action => action.name == "Confirm");
+        _cancel = _actionMap.actions.FirstOrDefault(action => action.name == "Cancel");
+        _cancel.started += Cancel;
+        _confirm.started += Confirm;
         _progressBar.fillAmount = 0;
     }
     private void CheckEverything()
@@ -43,8 +48,6 @@ public class BattleController : MonoBehaviour
     private void Update()
     {
         CheckRestart();
-        if (_data.CurrentState == State.Lock)
-            return;
     }
 
     private void CheckRestart()
@@ -70,8 +73,22 @@ public class BattleController : MonoBehaviour
         }
     }
 
+    private void Cancel(CallbackContext ctx)
+    {
+    }
+    private void Confirm(CallbackContext ctx)
+    {
+        if (_dataManager.CurrentState == State.WaitingForConfirm)
+            _dataManager.Confirm();
+    }
+
     private void OnDisable() 
     {
         _actionMap?.Disable();
+    }
+    private void OnDestroy()
+    {
+        _cancel.started -= Cancel;
+        _confirm.started -= Confirm;
     }
 }

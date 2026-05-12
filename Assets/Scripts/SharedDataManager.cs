@@ -5,47 +5,58 @@ namespace Assets.Scripts
     public class SharedDataManager
     {
         public Team CurrentPlayer { get; private set; }
-        public State CurrentState { get; private set; }
-        public Cell Destination { get; private set; }
-        public Unit Target { get; private set; }
-        public event Action OnTargetChosen;
+        public State CurrentState;
+        public Cell Cell { get; private set; }
+        public Unit Unit { get; private set; }
+        public Unit AttackedUnit { get; private set; }
+        bool IsAttack  => AttackedUnit != null;
+        public event Action<GameEvent> OnGameEvent;
+        
+        /*public event Action OnUnitChosen;
         public event Action OnDestinationChosen;
         public event Action OnLockIsOver;
         public event Action OnNextPlayer;
         public event Action OnWaitForConfirm;
-        public event Action OnAbort;
+        public event Action OnCancel;*/
         public SharedDataManager()
         {
             CurrentPlayer = Team.Player1;
+            CurrentState = State.ChoosingUnit;
+            Cell = null;
+            Unit = null;
+        }
+        public void SelectUnit(Unit unit)
+        {
+            if (unit.Team != CurrentPlayer)
+                return;
+            Unit = unit;
+            OnGameEvent.Invoke(GameEvent.SelectUnit);
             CurrentState = State.ChoosingCell;
-            Destination = null;
-            Target = null;
         }
-        public void ChooseTarget(Unit target)
+        public void SelectCell(Cell destination, Unit attacked)
         {
-            Target = target;
-            OnTargetChosen?.Invoke();
-            CurrentState = State.Lock;
-        }
-        public void ChooseDestination(Cell destination)
-        {
-            Destination = destination;
-            OnTargetChosen?.Invoke();
-            CurrentState = State.Lock;
-        }
-        public void WaitForConfirmation()
-        {
-            OnWaitForConfirm?.Invoke();
+            Cell = destination;
+            AttackedUnit = attacked;
+            OnGameEvent.Invoke(GameEvent.SelectCell);
             CurrentState = State.WaitingForConfirm;
         }
-        public void Abort()
+        public void Confirm()
         {
-            OnAbort.Invoke();
-            CurrentState = State.ChoosingCell;
+            OnGameEvent.Invoke(GameEvent.Confirm);
+            CurrentState = State.Lock;
+            MovementStart();
         }
-        public void EndTheLock()
+        public void MovementStart()
         {
-            OnLockIsOver?.Invoke();
+            OnGameEvent.Invoke(GameEvent.MovementStart);
+        }
+        public void MovementEnd()
+        {
+            OnGameEvent.Invoke(GameEvent.MovementEnd);
+            if (IsAttack)
+                OnGameEvent.Invoke(GameEvent.Attack);
+            //TODO: add multiple attacks
+            NextPlayer();
         }
         public void NextPlayer()
         {
@@ -53,10 +64,10 @@ namespace Assets.Scripts
                 (CurrentPlayer == Team.Player1) ?
                                     Team.Player2 :
                                     Team.Player1;
-            OnNextPlayer.Invoke();
-            CurrentState = State.ChoosingCell;
-            Destination = null;
-            Target = null;
+            OnGameEvent.Invoke(GameEvent.NewTurn);
+            CurrentState = State.ChoosingUnit;
+            Cell = null;
+            Unit = null;
         }
     }
 }

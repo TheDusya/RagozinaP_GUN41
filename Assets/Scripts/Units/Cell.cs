@@ -39,5 +39,5 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
         Select.GetOrAddComponent<Renderer>().material = material;
         Select.GetOrAddComponent<MeshRenderer>().enabled = true;
     }
-    private void ResetSelect() => Select.GetOrAddComponent<MeshRenderer>().enabled = false;
+    public void ResetSelect() => Select.GetOrAddComponent<MeshRenderer>().enabled = false;
 }
