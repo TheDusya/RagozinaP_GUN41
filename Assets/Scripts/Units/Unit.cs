@@ -27,4 +27,11 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     }
     public void TransparencyOn() => _renderer.material = _transparentMaterial;
     public void TransparencyOff() => _renderer.material = _material;
+    public void EnterQueenMode()
+    {
+        IsQueen = true;
+        if (gameObject.transform.Find("Crown") is Transform crown && crown != null)
+            if (crown.gameObject.TryGetComponent<MeshRenderer>(out var crownRenderer))
+                crownRenderer.enabled = true;
+    }
 }

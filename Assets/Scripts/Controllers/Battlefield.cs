@@ -49,8 +49,15 @@ public class Battlefield : MonoBehaviour
                 if (type is NeighbourType typeNotNull)
                     _neighbours[currCell][typeNotNull] = _cells[j];
             }
+            foreach (var team in Enum.GetValues(typeof(Team)))
+                if (!_neighbours[currCell].Where(el => AcessibleNeighbourTypes((Team)team).Contains(el.Key)).Any()) //the end cell for this team
+                    currCell.IsFinalFor = (Team)team;
         }
     }
+    private NeighbourType[] AcessibleNeighbourTypes(Team team) => (team == Team.Player1) ?
+            new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
+            new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
+    private Team OtherTeam(Team team) => team == Team.Player1 ? Team.Player2 : Team.Player1;
 
     public void OnCellClicked(Cell cell)
     {
@@ -116,6 +123,8 @@ public class Battlefield : MonoBehaviour
             unit.CurrentCell.CurrentUnit = null;
         unit.CurrentCell = cell;
         cell.CurrentUnit = unit;
+        if (cell.IsFinalFor is Team team && team == unit.Team)
+            unit.EnterQueenMode();
     }
 
     public NeighbourType? GetNeighbourType(Vector3 source, Vector3 target, float oneCellDistance)
@@ -187,13 +196,7 @@ public class Battlefield : MonoBehaviour
     private Dictionary<Cell, Unit> GetAccessibleFromSimpleChecker(Cell cell, Team team)
     {
         var result = new Dictionary<Cell, Unit>();
-        NeighbourType[] ourTypes = (team == Team.Player1) ?
-            new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
-            new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
-        NeighbourType[] backwardTypes = (team == Team.Player2) ?
-            new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
-            new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
-        foreach (var neighbourType in ourTypes)
+        foreach (var neighbourType in AcessibleNeighbourTypes(team))
         {
             if (_neighbours[cell].TryGetValue(neighbourType, out var neighbour))
                 if (neighbour.CurrentUnit == null)
@@ -202,7 +205,7 @@ public class Battlefield : MonoBehaviour
                     if (newNeighbour.CurrentUnit == null)
                         result.Add(newNeighbour, neighbour.CurrentUnit);
         }
-        foreach (var neighbourType in backwardTypes)
+        foreach (var neighbourType in AcessibleNeighbourTypes(OtherTeam(team)))
         {
             if (_neighbours[cell].TryGetValue(neighbourType, out var neighbour) && neighbour.CurrentUnit != null)
                 if (neighbour.CurrentUnit.Team != team && neighbour != null && _neighbours[neighbour].TryGetValue(neighbourType, out var newNeighbour))

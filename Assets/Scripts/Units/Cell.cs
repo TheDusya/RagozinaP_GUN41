@@ -12,6 +12,7 @@ public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
     private GameObject Select => _planes[Plane.Select];
     private GameObject Focus => _planes[Plane.Focus];
     public Unit CurrentUnit {get; set;}
+    public Team? IsFinalFor = null;
     void Start()
     {
         _planes = new Dictionary<Plane, GameObject>();
