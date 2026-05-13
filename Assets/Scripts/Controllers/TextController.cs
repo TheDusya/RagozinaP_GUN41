@@ -27,6 +27,8 @@ public class TextController : MonoBehaviour
         switch (gameEvent) {
             case GameEvent.NewTurn: WritePlayerText();
                 break;
+            case GameEvent.CancelCell: WritePlayerText(); 
+                break;
             case GameEvent.SelectCell: WriteConfirmText(); 
                 break;
         }

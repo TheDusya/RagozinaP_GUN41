@@ -40,10 +40,26 @@ namespace Assets.Scripts
             OnGameEvent.Invoke(GameEvent.SelectCell);
             CurrentState = State.WaitingForConfirm;
         }
+        internal void Cancel()
+        {
+            switch (CurrentState)
+            {
+                case State.WaitingForConfirm:
+                    CurrentState = State.ChoosingCell;
+                    OnGameEvent.Invoke(GameEvent.CancelCell);
+                    break;
+                case State.ChoosingCell:
+                    CurrentState = State.ChoosingUnit;
+                    OnGameEvent.Invoke(GameEvent.CancelUnit);
+                    break;
+            }
+        }
         public void Confirm()
         {
-            OnGameEvent.Invoke(GameEvent.Confirm);
+            if (CurrentState != State.WaitingForConfirm)
+                return;
             CurrentState = State.Lock;
+            OnGameEvent.Invoke(GameEvent.Confirm);
             MovementStart();
         }
         public void MovementStart()

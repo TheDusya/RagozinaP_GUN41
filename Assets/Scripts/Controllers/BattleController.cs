@@ -1,5 +1,4 @@
 using Assets.Scripts;
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,7 +26,6 @@ public class BattleController : MonoBehaviour
     private InputAction _cancel;
     private void OnEnable()
     {
-        CheckEverything();
         _actionMap.Enable();
         _restart = _actionMap.actions.FirstOrDefault(action => action.name == "Restart");
         _confirm = _actionMap.actions.FirstOrDefault(action => action.name == "Confirm");
@@ -35,15 +33,6 @@ public class BattleController : MonoBehaviour
         _cancel.started += Cancel;
         _confirm.started += Confirm;
         _progressBar.fillAmount = 0;
-    }
-    private void CheckEverything()
-    {
-        if (_actionMap == null)
-            throw new Exception("No action map! Something is very wrong!");
-        if (_canvas == null)
-            throw new Exception("No restart canvas found");
-        if (_progressBar == null)
-            throw new Exception("No progress bar found");
     }
     private void Update()
     {
@@ -73,15 +62,8 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    private void Cancel(CallbackContext ctx)
-    {
-    }
-    private void Confirm(CallbackContext ctx)
-    {
-        if (_dataManager.CurrentState == State.WaitingForConfirm)
-            _dataManager.Confirm();
-    }
-
+    private void Cancel(CallbackContext ctx) => _dataManager.Cancel();
+    private void Confirm(CallbackContext ctx) => _dataManager.Confirm();
     private void OnDisable() 
     {
         _actionMap?.Disable();

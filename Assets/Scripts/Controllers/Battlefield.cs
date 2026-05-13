@@ -22,6 +22,8 @@ public class Battlefield : MonoBehaviour
     [Inject]
     SharedDataManager _dataManager;
 
+    #region initialisation
+
     void Awake()
     {
         InitCells();
@@ -54,11 +56,51 @@ public class Battlefield : MonoBehaviour
                     currCell.IsFinalFor = (Team)team;
         }
     }
+
+    private void InitUnits()
+    {
+        _assessibleCells = new();
+        _units = FindObjectsOfType<Unit>();
+        foreach (var unit in _units)
+        {
+            var cell = GetCell(unit);
+            InitUnit(unit);
+            InstantMove(unit, cell);
+        }
+        RecountAccess();
+    }
+
+    public void SetDivider(GameObject divider) => _divider = divider.transform.position;
+    public Cell GetCell(Unit unit) => _cells.OrderBy(el => (el.transform.position - unit.transform.position).sqrMagnitude).FirstOrDefault();
+    private void InitUnit(Unit unit)
+    {
+        unit.IsQueen = false;
+        var team = GetTeam(unit.transform.position);
+        unit.Team = team;
+        unit.SetMaterials(colorPalette.GetTeamMaterial(team), colorPalette.GetTeamTransparenMaterial(team));
+    }
+    private Team GetTeam(Vector3 position) => position.z < _divider.z ? Team.Player1 : Team.Player2;
+    #endregion
+
     private NeighbourType[] AcessibleNeighbourTypes(Team team) => (team == Team.Player1) ?
             new NeighbourType[2] { NeighbourType.BottomLeft, NeighbourType.BottomRight } :
             new NeighbourType[2] { NeighbourType.TopLeft, NeighbourType.TopRight };
     private Team OtherTeam(Team team) => team == Team.Player1 ? Team.Player2 : Team.Player1;
 
+    private void ProcessEvent(GameEvent gameEvent)
+    {
+        if (gameEvent == GameEvent.MovementEnd)
+        {
+            InstantMove(_dataManager.Unit, _dataManager.Cell);
+            _dataManager.Cell.ResetSelect();
+            RecountAccess();
+        }
+        if (gameEvent == GameEvent.CancelCell)
+            SelectUnit(_dataManager.Unit);
+        if (gameEvent == GameEvent.CancelUnit)
+            foreach (var cell in _cells)
+                cell.ResetSelect();
+    }
     public void OnCellClicked(Cell cell)
     {
         if (_dataManager.CurrentState == State.ChoosingUnit && cell.CurrentUnit != null && _dataManager.CurrentPlayer == cell.CurrentUnit.Team)
@@ -85,29 +127,6 @@ public class Battlefield : MonoBehaviour
         foreach (var acessibleCell in acessibleForUnit.Keys)
             if (acessibleCell != cell)
                 acessibleCell.ResetSelect();
-    }
-
-    private void InitUnits()
-    {
-        _assessibleCells = new();
-        _units = FindObjectsOfType<Unit>();
-        foreach (var unit in _units)
-        {
-            var cell = GetCell(unit);
-            InitUnit(unit);
-            InstantMove(unit, cell);
-        }
-        RecountAccess();
-    }
-
-    private void ProcessEvent(GameEvent gameEvent)
-    {
-        if (gameEvent == GameEvent.MovementEnd)
-        {
-            InstantMove(_dataManager.Unit, _dataManager.Cell);
-            _dataManager.Cell.ResetSelect();
-            RecountAccess();
-        }
     }
 
     private void InstantMove(Unit unit, Cell cell)
@@ -144,16 +163,6 @@ public class Battlefield : MonoBehaviour
         return type;
     }
 
-    public void SetDivider(GameObject divider) => _divider = divider.transform.position;
-    public Cell GetCell(Unit unit) => _cells.OrderBy(el => (el.transform.position - unit.transform.position).sqrMagnitude).FirstOrDefault();
-    private void InitUnit(Unit unit)
-    {
-        unit.IsQueen = false;
-        var team = GetTeam(unit.transform.position);
-        unit.Team = team;
-        unit.SetMaterials(colorPalette.GetTeamMaterial(team), colorPalette.GetTeamTransparenMaterial(team));
-    }
-    private Team GetTeam(Vector3 position) => position.z < _divider.z ? Team.Player1 : Team.Player2;
     private Dictionary<Cell, Unit> GetAccessibleFrom(Cell cell, Unit unit) //Im sorry for these functions
     {
         if (unit.IsQueen)
@@ -233,6 +242,10 @@ public class Battlefield : MonoBehaviour
             _cells[i].OnPointerClickEvent -= OnCellClicked;
         }
         _neighbours.Clear();
+        foreach (var unit in _units)
+            _assessibleCells[unit].Clear();
+        _assessibleCells.Clear();
+        _dataManager.OnGameEvent -= ProcessEvent;
     }
 
 }

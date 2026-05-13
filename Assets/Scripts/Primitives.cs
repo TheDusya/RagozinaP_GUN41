@@ -1,4 +1,4 @@
 public enum NeighbourType { TopRight, BottomRight, BottomLeft, TopLeft}
 public enum Team { Player1, Player2 }
 public enum State { ChoosingUnit, ChoosingCell, Lock, WaitingForConfirm }
-public enum GameEvent { NewTurn, SelectUnit, SelectCell, Confirm, Cancel, MovementStart, MovementEnd, Attack }
+public enum GameEvent { NewTurn, SelectUnit, SelectCell, Confirm, CancelCell, CancelUnit, MovementStart, MovementEnd, Attack }
