@@ -1,13 +1,10 @@
 using Assets.Scripts;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
-using static UnityEngine.UI.CanvasScaler;
 
 public class Battlefield : MonoBehaviour
 {

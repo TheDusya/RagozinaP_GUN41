@@ -32,6 +32,8 @@ public class BattleController : MonoBehaviour
         _cancel = _actionMap.actions.FirstOrDefault(action => action.name == "Cancel");
         _cancel.started += Cancel;
         _confirm.started += Confirm;
+        _restart.started += Restart;
+        _restart.canceled += RestartOver;
         _progressBar.fillAmount = 0;
     }
     private void Update()
@@ -64,6 +66,10 @@ public class BattleController : MonoBehaviour
 
     private void Cancel(CallbackContext ctx) => _dataManager.Cancel();
     private void Confirm(CallbackContext ctx) => _dataManager.Confirm();
+
+    private void Restart(CallbackContext ctx) => _dataManager.Restart();
+    private void RestartOver(CallbackContext ctx) => _dataManager.RestartOver();
+
     private void OnDisable() 
     {
         _actionMap?.Disable();

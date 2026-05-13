@@ -1,7 +1,4 @@
 using Assets.Scripts;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -27,9 +24,13 @@ public class TextController : MonoBehaviour
         switch (gameEvent) {
             case GameEvent.NewTurn: WritePlayerText();
                 break;
+            case GameEvent.RestartOver: WritePlayerText(); 
+                break;
             case GameEvent.CancelCell: WritePlayerText(); 
                 break;
             case GameEvent.SelectCell: WriteConfirmText(); 
+                break;
+            case GameEvent.Restart: _text.text = ""; 
                 break;
         }
     }   

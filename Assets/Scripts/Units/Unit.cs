@@ -1,11 +1,9 @@
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-
     [SerializeField]
     public Cell CurrentCell { get; set; }
     public bool IsQueen { get; set; }

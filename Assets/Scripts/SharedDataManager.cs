@@ -11,13 +11,6 @@ namespace Assets.Scripts
         public Unit AttackedUnit { get; private set; }
         bool IsAttack  => AttackedUnit != null;
         public event Action<GameEvent> OnGameEvent;
-        
-        /*public event Action OnUnitChosen;
-        public event Action OnDestinationChosen;
-        public event Action OnLockIsOver;
-        public event Action OnNextPlayer;
-        public event Action OnWaitForConfirm;
-        public event Action OnCancel;*/
         public SharedDataManager()
         {
             CurrentPlayer = Team.Player1;
@@ -85,5 +78,7 @@ namespace Assets.Scripts
             Cell = null;
             Unit = null;
         }
+        public void Restart() => OnGameEvent.Invoke(GameEvent.Restart);
+        public void RestartOver() => OnGameEvent.Invoke(GameEvent.RestartOver);
     }
 }
