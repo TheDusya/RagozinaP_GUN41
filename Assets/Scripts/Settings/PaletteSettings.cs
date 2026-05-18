@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Settings/CellPaletteSettings", fileName = "CellPaletteSettingsFile")]
-public class ColorPaletteSettings : ScriptableObject
+public class PaletteSettings : ScriptableObject
 {
     [field: SerializeField]
     public Material SelectCell { get; private set; }

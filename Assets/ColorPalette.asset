@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff1623f3ab3c038429f5046b44aa18f4, type: 3}
-  m_Name: ColorPaletteSettingsFile
+  m_Name: ColorPalette
   m_EditorClassIdentifier: 
   <SelectCell>k__BackingField: {fileID: 2100000, guid: 1a8721acbad02184faa642460ca3d342, type: 2}
   <MoveCell>k__BackingField: {fileID: 2100000, guid: 5440e3875e8ec694aa8e3b3e10c8c10d, type: 2}

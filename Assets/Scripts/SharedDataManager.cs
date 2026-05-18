@@ -23,14 +23,14 @@ namespace Assets.Scripts
             if (unit.Team != CurrentPlayer)
                 return;
             Unit = unit;
-            OnGameEvent.Invoke(GameEvent.SelectUnit);
+            OnGameEvent?.Invoke(GameEvent.SelectUnit);
             CurrentState = State.ChoosingCell;
         }
         public void SelectCell(Cell destination, Unit attacked)
         {
             Cell = destination;
             AttackedUnit = attacked;
-            OnGameEvent.Invoke(GameEvent.SelectCell);
+            OnGameEvent?.Invoke(GameEvent.SelectCell);
             CurrentState = State.WaitingForConfirm;
         }
         internal void Cancel()
@@ -39,11 +39,11 @@ namespace Assets.Scripts
             {
                 case State.WaitingForConfirm:
                     CurrentState = State.ChoosingCell;
-                    OnGameEvent.Invoke(GameEvent.CancelCell);
+                    OnGameEvent?.Invoke(GameEvent.CancelCell);
                     break;
                 case State.ChoosingCell:
                     CurrentState = State.ChoosingUnit;
-                    OnGameEvent.Invoke(GameEvent.CancelUnit);
+                    OnGameEvent?.Invoke(GameEvent.CancelUnit);
                     break;
             }
         }
@@ -52,18 +52,18 @@ namespace Assets.Scripts
             if (CurrentState != State.WaitingForConfirm)
                 return;
             CurrentState = State.Lock;
-            OnGameEvent.Invoke(GameEvent.Confirm);
+            OnGameEvent?.Invoke(GameEvent.Confirm);
             MovementStart();
         }
         public void MovementStart()
         {
-            OnGameEvent.Invoke(GameEvent.MovementStart);
+            OnGameEvent?.Invoke(GameEvent.MovementStart);
         }
         public void MovementEnd()
         {
-            OnGameEvent.Invoke(GameEvent.MovementEnd);
+            OnGameEvent?.Invoke(GameEvent.MovementEnd);
             if (IsAttack)
-                OnGameEvent.Invoke(GameEvent.Attack);
+                OnGameEvent?.Invoke(GameEvent.Attack);
             //TODO: add multiple attacks
             NextPlayer();
         }
@@ -73,12 +73,12 @@ namespace Assets.Scripts
                 (CurrentPlayer == Team.Player1) ?
                                     Team.Player2 :
                                     Team.Player1;
-            OnGameEvent.Invoke(GameEvent.NewTurn);
+            OnGameEvent?.Invoke(GameEvent.NewTurn);
             CurrentState = State.ChoosingUnit;
             Cell = null;
             Unit = null;
         }
-        public void Restart() => OnGameEvent.Invoke(GameEvent.Restart);
-        public void RestartOver() => OnGameEvent.Invoke(GameEvent.RestartOver);
+        public void Restart() => OnGameEvent?.Invoke(GameEvent.Restart);
+        public void RestartOver() => OnGameEvent?.Invoke(GameEvent.RestartOver);
     }
 }

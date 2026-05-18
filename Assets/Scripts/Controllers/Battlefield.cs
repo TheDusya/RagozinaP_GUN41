@@ -14,8 +14,8 @@ public class Battlefield : MonoBehaviour
     private Dictionary<Unit, Dictionary<Cell, Unit>> _assessibleCells; //unit is the attacked checker, unit == null -> move without an attack
     private Vector3 _divider; //more complex divider may be created for more teams
 
-    [Inject]
-    private ColorPaletteSettings colorPalette;
+    [SerializeField]
+    PaletteSettings _colorPalette;
     [Inject]
     SharedDataManager _dataManager;
 
@@ -74,7 +74,7 @@ public class Battlefield : MonoBehaviour
         unit.IsQueen = false;
         var team = GetTeam(unit.transform.position);
         unit.Team = team;
-        unit.SetMaterials(colorPalette.GetTeamMaterial(team), colorPalette.GetTeamTransparenMaterial(team));
+        unit.SetMaterials(_colorPalette.GetTeamMaterial(team), _colorPalette.GetTeamTransparenMaterial(team));
     }
     private Team GetTeam(Vector3 position) => position.z < _divider.z ? Team.Player1 : Team.Player2;
     #endregion
@@ -120,7 +120,7 @@ public class Battlefield : MonoBehaviour
         _dataManager.SelectUnit(unit);
         foreach (var cell in _cells)
             if (accessible.ContainsKey(cell))
-                cell.SetSelect(accessible[cell] ? colorPalette.AttackCell : colorPalette.SelectCell);
+                cell.SetSelect(accessible[cell] ? _colorPalette.AttackCell : _colorPalette.SelectCell);
             else
                 cell.ResetSelect();
     }

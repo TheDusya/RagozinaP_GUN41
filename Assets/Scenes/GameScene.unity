@@ -6484,7 +6484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000076293945
+      value: -0.000011444092
       objectReference: {fileID: 0}
     - target: {fileID: 22414360, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8337,7 +8337,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _restartCanvas: {fileID: 118273031}
   _progressBar: {fileID: 139040246}
-  _colorPalette: {fileID: 11400000, guid: 0cd402586fbe879498877e296a1ce106, type: 2}
   divider: {fileID: 414043100}
 --- !u!114 &1888914754
 MonoBehaviour:
@@ -8398,7 +8397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8978dcdf7ed503468c1af2dc33f4b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fillingSpeed: 100
+  _fillingSpeed: 1
 --- !u!114 &1888914757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8411,6 +8410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af694386a02db4b41a5ca39edb2b6f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorPalette: {fileID: 11400000, guid: 0cd402586fbe879498877e296a1ce106, type: 2}
 --- !u!114 &1888914758
 MonoBehaviour:
   m_ObjectHideFlags: 0

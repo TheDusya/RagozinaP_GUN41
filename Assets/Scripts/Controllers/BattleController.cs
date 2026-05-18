@@ -11,15 +11,15 @@ public class BattleController : MonoBehaviour
 {
     [Inject]
     InputActionMap _actionMap;
-    [Inject(Id = "RestartCanvas")]
+    [Inject]
     Canvas _canvas;
-    [Inject(Id = "ProgressBar")]
+    [Inject]
     Image _progressBar;
     [Inject]
     SharedDataManager _dataManager;
 
-    [SerializeField, Min(10f)]
-    float _fillingSpeed = 100f;
+    [SerializeField, Min(1f)]
+    float _fillingSpeed = 1f;
 
     private InputAction _restart;
     private InputAction _confirm;
@@ -47,7 +47,7 @@ public class BattleController : MonoBehaviour
         {
             _canvas.enabled = true;
             _canvas.gameObject.SetActive(true);
-            var progress = _progressBar.fillAmount + (1 / _fillingSpeed);
+            var progress = _progressBar.fillAmount + _fillingSpeed * Time.deltaTime;
             if (progress < 1)
                 _progressBar.fillAmount = progress;
             else

@@ -12,8 +12,6 @@ public class SceneInstaller : MonoInstaller
     [SerializeField]
     GameObject _progressBar;
     [SerializeField]
-    ColorPaletteSettings _colorPalette;
-    [SerializeField]
     GameObject divider;
     private Battlefield _battlefield;
     Controls _controls;
@@ -27,9 +25,8 @@ public class SceneInstaller : MonoInstaller
         SharedDataManager sharedData = new(); 
         Container.BindInstance(sharedData).AsSingle();
         Container.BindInstance(_battlefield).AsSingle();
-        Container.BindInstance(_colorPalette).AsSingle();
-        Container.BindInstance(_restartCanvas).WithId("RestartCanvas").AsSingle();
-        Container.BindInstance(GetProgressImage()).WithId("ProgressBar").AsSingle();
+        Container.BindInstance(_restartCanvas).AsSingle();
+        Container.BindInstance(GetProgressImage()).AsSingle();
     }
     private void FillCanvas()
     {
