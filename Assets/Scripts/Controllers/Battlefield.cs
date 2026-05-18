@@ -86,17 +86,24 @@ public class Battlefield : MonoBehaviour
 
     private void ProcessEvent(GameEvent gameEvent)
     {
-        if (gameEvent == GameEvent.MovementEnd)
+        switch (gameEvent)
         {
-            InstantMove(_dataManager.Unit, _dataManager.Cell);
-            _dataManager.Cell.ResetSelect();
-            RecountAccess();
+            case GameEvent.NewTurn:
+                InstantMove(_dataManager.Unit, _dataManager.Cell);
+                _dataManager.Cell.ResetSelect();
+                RecountAccess();
+                break;
+            case GameEvent.Attack:
+                _dataManager.AttackedUnit.Kill();
+                break;
+            case GameEvent.CancelCell:
+                SelectUnit(_dataManager.Unit);
+                break;
+            case GameEvent.CancelUnit:
+                foreach (var cell in _cells)
+                    cell.ResetSelect();
+                break;
         }
-        if (gameEvent == GameEvent.CancelCell)
-            SelectUnit(_dataManager.Unit);
-        if (gameEvent == GameEvent.CancelUnit)
-            foreach (var cell in _cells)
-                cell.ResetSelect();
     }
     public void OnCellClicked(Cell cell)
     {
@@ -108,6 +115,8 @@ public class Battlefield : MonoBehaviour
     private void SelectUnit(Unit unit)
     {
         var accessible = _assessibleCells[unit];
+        if (!accessible.Any())
+            return;
         _dataManager.SelectUnit(unit);
         foreach (var cell in _cells)
             if (accessible.ContainsKey(cell))
@@ -226,9 +235,18 @@ public class Battlefield : MonoBehaviour
     }
     private void RecountAccess()
     {
+        List<Unit> attackingUnits = new List<Unit>();
         foreach (var unit in _units)
-            _assessibleCells[unit] = GetAccessibleFrom(unit.CurrentCell, unit);
-        //TODO: force you to attack;
+        {
+            var acessibleFrom = GetAccessibleFrom(unit.CurrentCell, unit);
+            _assessibleCells[unit] = acessibleFrom;
+            if (unit.Team == _dataManager.CurrentPlayer && acessibleFrom.Where(el => el.Value != null).Any())
+                attackingUnits.Add(unit);
+        }
+         if (attackingUnits.Any())
+            foreach (var unit in _assessibleCells.Keys)
+                if (unit.Team == _dataManager.CurrentPlayer && !attackingUnits.Contains(unit))
+                    _assessibleCells[unit].Clear();
     }
 
     public void OnDestroy()

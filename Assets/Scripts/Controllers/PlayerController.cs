@@ -32,9 +32,6 @@ public class PlayerController : MonoBehaviour
                 _unitTransform = _dataManager.Unit.gameObject.transform;
                 _time = 0;
                 break;
-            case GameEvent.Attack:
-                Destroy(_dataManager.AttackedUnit.gameObject);
-                break;
         }
     }
 

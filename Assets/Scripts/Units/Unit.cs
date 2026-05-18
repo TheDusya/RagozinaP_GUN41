@@ -32,4 +32,9 @@ public class Unit : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, I
             if (crown.gameObject.TryGetComponent<MeshRenderer>(out var crownRenderer))
                 crownRenderer.enabled = true;
     }
+    public void Kill()
+    {
+        CurrentCell.CurrentUnit = null;
+        gameObject.SetActive(false);
+    }
 }
