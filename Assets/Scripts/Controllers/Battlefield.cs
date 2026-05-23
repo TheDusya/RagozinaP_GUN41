@@ -9,7 +9,7 @@ using Zenject;
 public class Battlefield : MonoBehaviour
 {
     private Cell[] _cells;
-    private Unit[] _units;
+    private List<Unit> _units;
     private Dictionary<Cell, Dictionary<NeighbourType, Cell>> _neighbours;
     private Dictionary<Unit, Dictionary<Cell, Unit>> _assessibleCells; //unit is the attacked checker, unit == null -> move without an attack
     private Vector3 _divider; //more complex divider may be created for more teams
@@ -57,7 +57,7 @@ public class Battlefield : MonoBehaviour
     private void InitUnits()
     {
         _assessibleCells = new();
-        _units = FindObjectsOfType<Unit>();
+        _units = FindObjectsOfType<Unit>().ToList();
         foreach (var unit in _units)
         {
             var cell = GetCell(unit);
@@ -94,6 +94,7 @@ public class Battlefield : MonoBehaviour
                 RecountAccess();
                 break;
             case GameEvent.Attack:
+                _units.Remove(_dataManager.AttackedUnit);
                 _dataManager.AttackedUnit.Kill();
                 break;
             case GameEvent.CancelCell:
