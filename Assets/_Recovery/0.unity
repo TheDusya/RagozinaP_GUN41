@@ -7214,7 +7214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilemapNodeSystem
   grid: {fileID: 629739876}
-  _tilemap: {fileID: 630876989}
 --- !u!4 &1634626632
 Transform:
   m_ObjectHideFlags: 0
