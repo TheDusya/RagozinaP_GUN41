@@ -32,13 +32,13 @@ public class PlayerMove : MonoBehaviour
     {
         if (!IsMoving)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow))
                 _moveDirection = MoveDirection.Left;
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Input.GetKey(KeyCode.RightArrow))
                 _moveDirection = MoveDirection.Right;
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (Input.GetKey(KeyCode.UpArrow))
                 _moveDirection = MoveDirection.Up;
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKey(KeyCode.DownArrow))
                 _moveDirection = MoveDirection.Down;
             else
                 return;
