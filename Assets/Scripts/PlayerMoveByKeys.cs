@@ -1,19 +1,11 @@
+using Assets.Scripts;
 using Assets.Scripts.ViewAbove;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-public class PlayerMove : MonoBehaviour
+class PlayerMoveByKeys : PlayerMove
 {
-    [SerializeField]
-    private Tilemap _map;
-    [SerializeField]
-    private float _speed = 5;
-
     private NodeSystem _nodeSystem;
     private MoveDirection _moveDirection;
-    private bool IsMoving => _nextNode != null && _moveDirection != MoveDirection.NoMovement;
     private TileNode _currNode;
     private TileNode _nextNode = null;
 
@@ -30,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Update()
     {
-        if (!IsMoving)
+        if (!_isMoving && _nextNode == null)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
                 _moveDirection = MoveDirection.Left;
@@ -50,23 +42,11 @@ public class PlayerMove : MonoBehaviour
                 _nextNode = neighbour;
         }
         else
-            Move();
+            Move(_nextNode.Position);
     }
-    private void Move()
+    protected override void SetNewCurrent()
     {
-        Vector3 targetPosition = _nextNode.Position;
-        transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                _speed * Time.deltaTime
-            );
-
-        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
-        {
-            transform.position = targetPosition;
-            _currNode = _nextNode;
-            _nextNode = null;
-            _moveDirection = MoveDirection.NoMovement;
-        }
+        _currNode = _nextNode;
+        _nextNode = null;
     }
 }

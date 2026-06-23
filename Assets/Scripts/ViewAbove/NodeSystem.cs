@@ -1,12 +1,8 @@
 
 using Assets.Scripts.ViewAbove;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class NodeSystem : MonoBehaviour
 {
