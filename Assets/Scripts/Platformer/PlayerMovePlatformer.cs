@@ -22,11 +22,11 @@ public class PlayerMovePlatformer : MonoBehaviour
         ContactFilter2D filter = new ContactFilter2D();
         _isGrounded = Physics2D.OverlapCollider(_сollider, filter, colliders) > 0;
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (Input.GetKey(KeyCode.Space) && _isGrounded)
             _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, jumpForce);
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
             _rigidbody.linearVelocity = new Vector2(-moveSpeed, _rigidbody.linearVelocity.y);
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
             _rigidbody.linearVelocity = new Vector2(moveSpeed, _rigidbody.linearVelocity.y);
     }
 }
