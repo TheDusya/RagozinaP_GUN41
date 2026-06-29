@@ -12,6 +12,8 @@ namespace Assets.Scripts.ViewAbove
         private void Start()
         {
             var myPosition = transform.position;
+            var legs = GetComponent<Renderer>().bounds.min.y;
+            myPosition.y = legs;
             _cameraZ = _camera.transform.position.z;
             Vector3Int mapMyPosition = _tilemap.WorldToCell(myPosition);
             if (!_tilemap.HasTile(mapMyPosition))
