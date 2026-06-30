@@ -31,10 +31,13 @@ namespace Assets.Scripts
 
         private bool IsPlayerSeen()
         {
-            var vectorToTarget = _enemy.transform.position - transform.position;
+            var vectorToTarget = _enemy.position - transform.position;
+            var vectorLength = vectorToTarget.magnitude;
             if (Vector3.Angle(transform.forward, vectorToTarget.normalized) > _angle / 2)
                 return false;
-            if (Physics.Raycast(transform.position, vectorToTarget, _radius, _obstacleMask))
+            if (vectorLength > _radius)
+                return false;
+            if (Physics.Raycast(transform.position, vectorToTarget, vectorLength, _obstacleMask))
                 return false;
             return true;
         }
