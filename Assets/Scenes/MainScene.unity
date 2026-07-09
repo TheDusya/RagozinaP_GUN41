@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97b2287c74589d4390a97791111d66a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ballType: 1
+  PunchPower: 10
+  BallType: 0
   _lightMaterial: {fileID: 2100000, guid: 0f83d80ad07198b44b6305ea202c1ae5, type: 2}
   _mediumMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}
   _heavyMaterial: {fileID: 2100000, guid: 0a996f7e0d6f7ca4daef9027290b4624, type: 2}
@@ -1679,7 +1680,7 @@ GameObject:
   - component: {fileID: 2595575765204441175}
   - component: {fileID: 8826116799716732794}
   - component: {fileID: 8826116799716732795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
