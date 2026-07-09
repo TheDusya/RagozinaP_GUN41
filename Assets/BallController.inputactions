@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "BallController",
+    "maps": [
+        {
+            "name": "BallMap",
+            "id": "838efa18-955f-4a20-a8d3-b3f85c8b7d09",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "d0198121-ac72-40a0-8472-b925d3f43c3f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8eb9ec7c-f565-4298-bbb4-c92cda0c6b41",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
