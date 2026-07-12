@@ -21,6 +21,6 @@ namespace Assets.Scripts
 
         public void WriteCurrent(int points) => _currentScoreText.text = points.ToString();
         public void WriteTotal(int points) => _totalScoreText.text = points.ToString();
-        public void WriteBonus(int points) => _bonusText.text = points.ToString();
+        public void WriteBonus(int points) => _bonusText.text = "+" + points.ToString();
     }
 }
