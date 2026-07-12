@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97b2287c74589d4390a97791111d66a, type: 3}
+  m_Name: GameParameters
+  m_EditorClassIdentifier: 
+  PinAmount: 10
+  SpareBonus: 5
+  StrikeBonus: 12
+  PunchPower: 40
+  BallType: 0
+  _lightMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}
+  _mediumMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}
+  _heavyMaterial: {fileID: 2100000, guid: 0a996f7e0d6f7ca4daef9027290b4624, type: 2}
+  _lightMass: 1
+  _mediumMass: 4
+  _heavyMass: 9

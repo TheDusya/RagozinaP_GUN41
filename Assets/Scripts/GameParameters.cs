@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    internal class GameParameters : MonoBehaviour
+    [CreateAssetMenu(fileName = "GameParameters")]
+    internal class GameParameters : ScriptableObject
     {
-        public float PunchPower;
+        public int PinAmount = 10;
+        public int SpareBonus;
+        public int StrikeBonus;
         [Space(10)]
+        public float PunchPower;
         public BallType BallType;
 
         //not the prettiest decision, but better than nothing

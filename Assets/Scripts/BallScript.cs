@@ -5,28 +5,36 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Renderer))]
 public class BallScript : MonoBehaviour, IPointerClickHandler
 {
     [Inject]
     private (float min, float max) _xRange;
+    [Inject] 
+    private EventManager _eventManager;
     [Inject(Id = "Start")]
     private GameObject _startingPoint;
     [Inject]
     private GameParameters _gameParameters;
     private bool _isPointChosen;
     private Rigidbody _rigidbody;
+    private Vector3 _savedPosition;
+    private Quaternion _savedRotation;
 
     [Inject]
     void AfterInject()
     {
-        if (!TryGetComponent<Rigidbody>(out _rigidbody))
-            throw new System.Exception("Rigidbody not found");
-        if (!TryGetComponent<Renderer>(out var renderer))
-            throw new System.Exception("Renderer not found (for some reason)");
+        _rigidbody = GetComponent<Rigidbody>();
+        var renderer = GetComponent<Renderer>();
         renderer.SetMaterials(new List<Material>() { _gameParameters.GetMaterialByType(_gameParameters.BallType), renderer.materials[1] });
+        _eventManager.EndRound += EndRound;
         _rigidbody.mass = _gameParameters.GetMassByType(_gameParameters.BallType);
         _rigidbody.useGravity = false;
         SetRandomStart();
+        _isPointChosen = false;
+        _savedPosition = transform.position;
+        _savedRotation = transform.rotation;
     }
 
     private Vector3 VectorWithX(Vector3 position, float x) => new Vector3(x, position.y, position.z);
@@ -35,7 +43,7 @@ public class BallScript : MonoBehaviour, IPointerClickHandler
         transform.position = VectorWithX(transform.position, x);
         _startingPoint.transform.position = VectorWithX(_startingPoint.transform.position, x);
     }
-
+ 
     void OnDrawGizmos() //for me to see the range
     {
         if (_isPointChosen)
@@ -53,7 +61,9 @@ public class BallScript : MonoBehaviour, IPointerClickHandler
 
     void FixedUpdate()
     {
-        if (!_isPointChosen)
+        if (_isPointChosen)
+            return;
+        else
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 100f) &&
@@ -61,7 +71,6 @@ public class BallScript : MonoBehaviour, IPointerClickHandler
                 SetXForBallAndStartingPoint(hit.point.x);
         }
     }
-
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
         _isPointChosen = true;
@@ -69,4 +78,14 @@ public class BallScript : MonoBehaviour, IPointerClickHandler
         _startingPoint.SetActive(false);
         _rigidbody.AddForce(new Vector3(0, 0, 1) * _gameParameters.PunchPower, ForceMode.Impulse);
     }
+    private void EndRound(bool isFinalRound)
+    {
+        _isPointChosen = false;
+        _rigidbody.useGravity = false;
+        _startingPoint.SetActive(true);
+        transform.SetPositionAndRotation(_savedPosition, _savedRotation);
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+    }
+    private void OnDestroy() => _eventManager.EndRound -= EndRound;
 }
