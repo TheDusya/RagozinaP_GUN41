@@ -83,6 +83,7 @@ public class BallScript : MonoBehaviour, IPointerClickHandler
         _isPointChosen = false;
         _rigidbody.useGravity = false;
         _startingPoint.SetActive(true);
+        _startingPoint.transform.position = VectorWithX(_startingPoint.transform.position, _savedPosition.x);
         transform.SetPositionAndRotation(_savedPosition, _savedRotation);
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.angularVelocity = Vector3.zero;
