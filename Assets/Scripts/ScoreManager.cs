@@ -35,6 +35,15 @@ namespace Assets.Scripts
             _totalScore = points;
             _textManager.WriteTotal(points);
         }
+        private void DisplayBonuses() //ugly, but works well
+        {
+            var bonus = 0;
+            if (_strikeBonusesLeft > 0)
+                bonus += _gameParameters.StrikeBonus;
+            if (_spareBonusesLeft > 0) 
+                bonus += _gameParameters.SpareBonus;
+            _textManager.WriteBonus(bonus);
+        }
 
         private void PinFell() => SetCurrent(_currentScore + 1);
 
@@ -58,6 +67,7 @@ namespace Assets.Scripts
             }
             else if (_currentScore == _gameParameters.PinAmount)
                 _spareBonusesLeft += 1;
+            DisplayBonuses();
         }
 
         private void HandleEndCouple()

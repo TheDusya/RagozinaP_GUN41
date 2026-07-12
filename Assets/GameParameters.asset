@@ -17,7 +17,7 @@ MonoBehaviour:
   StrikeBonus: 12
   PunchPower: 40
   BallType: 0
-  _lightMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}
+  _lightMaterial: {fileID: 2100000, guid: 0f83d80ad07198b44b6305ea202c1ae5, type: 2}
   _mediumMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}
   _heavyMaterial: {fileID: 2100000, guid: 0a996f7e0d6f7ca4daef9027290b4624, type: 2}
   _lightMass: 1
