@@ -15,7 +15,7 @@ MonoBehaviour:
   PinAmount: 10
   SpareBonus: 5
   StrikeBonus: 12
-  PunchPower: 40
+  PunchPower: 80
   BallType: 0
   _lightMaterial: {fileID: 2100000, guid: 0f83d80ad07198b44b6305ea202c1ae5, type: 2}
   _mediumMaterial: {fileID: 2100000, guid: 4a389ee879c30194bb2e28a88cf484b1, type: 2}

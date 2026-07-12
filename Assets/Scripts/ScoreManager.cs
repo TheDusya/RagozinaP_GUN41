@@ -72,7 +72,7 @@ namespace Assets.Scripts
 
         private void HandleEndCouple()
         {
-            _textManager.WriteTotal(_totalScore + _currentScore);
+            SetTotal(_totalScore + _currentScore);
             SetCurrent(0);
         }
 

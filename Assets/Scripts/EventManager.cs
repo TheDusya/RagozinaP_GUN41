@@ -23,7 +23,11 @@ public class EventManager : IDisposable
             EndCouple?.Invoke();
         _isFirstRound = !_isFirstRound;
     }
-    public void EndCoupleInvoke() => EndCouple?.Invoke();
+    public void EndCoupleInvoke()
+    {
+        _isFirstRound = true;
+        EndCouple?.Invoke();
+    }
 
     void IDisposable.Dispose()
     {
