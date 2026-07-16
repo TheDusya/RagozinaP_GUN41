@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 692522841615992991}
   - component: {fileID: 4873769759325772022}
   - component: {fileID: 9151012203417996077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigBrickObstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7678173743733360903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2466294, y: 7.7000003, z: -0.21102601}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
