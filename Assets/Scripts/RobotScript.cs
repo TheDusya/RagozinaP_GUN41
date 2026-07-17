@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
+    [RequireComponent(typeof(CapsuleCollider))]
     internal class RobotScript : MonoBehaviour
     {
         private const float _rotationLimit = 0.01f;
@@ -22,6 +24,12 @@ namespace Assets.Scripts
         private float _rotationSum = 0;
         private int _antiStuckCounter = 0;
         private bool _isPrevBackward = false;
+        private CapsuleCollider _collider;
+
+        private void OnEnable()
+        {
+            _collider = GetComponent<CapsuleCollider>();
+        }
 
         private float AngleFromDirection(Direction direction) => 
             direction switch {
@@ -31,7 +39,7 @@ namespace Assets.Scripts
                 _ => throw new NotImplementedException()
             };
 
-        private Vector3 RotationFromDirection(Direction direction) => 
+        private Vector3 VectorFromDirection(Direction direction) => 
             direction switch {
                 Direction.Forward => transform.forward,
                 Direction.Left => transform.forward + Vector3.left,
@@ -39,8 +47,8 @@ namespace Assets.Scripts
                 _ => throw new NotImplementedException()
             };
 
-        private bool IsObstacleInDirection(Direction direction) => 
-            Physics.Raycast(transform.position, RotationFromDirection(direction), _maxObstacleDistance);
+        private bool IsObstacleInDirection(Direction direction) =>  
+            Physics.SphereCast(new Ray(transform.position, VectorFromDirection(direction)), _collider.radius, _maxObstacleDistance);
 
         private bool TryGetPossibleDirections(out List<Direction> directions)
         {
