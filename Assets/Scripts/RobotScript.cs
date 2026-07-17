@@ -48,7 +48,7 @@ namespace Assets.Scripts
             };
 
         private bool IsObstacleInDirection(Direction direction) =>  
-            Physics.SphereCast(new Ray(transform.position, VectorFromDirection(direction)), _collider.radius, _maxObstacleDistance);
+            Physics.Raycast(transform.position, VectorFromDirection(direction), _maxObstacleDistance);
 
         private bool TryGetPossibleDirections(out List<Direction> directions)
         {
