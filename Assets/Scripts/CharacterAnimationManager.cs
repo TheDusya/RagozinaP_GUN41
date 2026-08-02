@@ -1,11 +1,5 @@
-﻿using DG.Tweening;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts
 {
@@ -13,7 +7,7 @@ namespace Assets.Scripts
     internal class CharacterAnimationManager : MonoBehaviour
     {
         Animator _animator;
-        bool _isCorrect = true;
+        bool _isCorrect = false;
 
         private void Start()
         {
@@ -21,14 +15,21 @@ namespace Assets.Scripts
             if (!_animator.parameters.Where(par => par.name == GameParameters.IsCharacterMovingParameterName).Any())
                 Debug.Log($"Speed parameter {GameParameters.IsCharacterMovingParameterName} not found!");
             else
+            {
                 _isCorrect = true;
+                InGameEventManager.PathWasChosen += StartMoving;
+                InGameEventManager.PathWasFinished += EndMoving;
+            }
+
         }
-        void Update()
-        {   
+        void StartMoving(Path path) => _animator.SetBool(GameParameters.IsCharacterMovingParameterName, true);
+        void EndMoving() => _animator.SetBool(GameParameters.IsCharacterMovingParameterName, false);
+        private void OnDestroy()
+        {
             if (!_isCorrect)
                 return;
-            bool isMoving = DOTween.IsTweening(transform);
-            _animator.SetBool(GameParameters.IsCharacterMovingParameterName, isMoving);
+            InGameEventManager.PathWasChosen -= StartMoving;
+            InGameEventManager.PathWasFinished -= EndMoving;
         }
     }
 }

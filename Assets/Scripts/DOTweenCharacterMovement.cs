@@ -7,8 +7,18 @@ namespace Assets.Scripts
     internal class DOTweenCharacterMovement : MonoBehaviour
     {
         Vector3[] points = null;
-        bool isMoving = false;
-        void Start() => InGameEventManager.PathWasChosen += SetPath;
+        bool _isMoving = false;
+        Tween _movementTween = null;
+        public bool IsMoving { get => _isMoving; }
+        void Start()
+        {
+            var renderer = GetComponentInChildren<Renderer>();
+            renderer.materials.FirstOrDefault().
+                DOColor(Color.blue, GameParameters.ColorChangingTime). //Персонаж будет красиво синеть
+                SetLoops(-1, LoopType.Yoyo). //бесконечный луп цвета туда-сюда
+                SetId(GameParameters.ColorDOTweenTag); //тег для поиска на всякий случай
+            InGameEventManager.PathWasChosen += SetPath;
+        }
         void OnDestroy() => InGameEventManager.PathWasChosen -= SetPath;
 
         private void SetPath(Scripts.Path path)
@@ -26,23 +36,24 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if (isMoving && !DOTween.IsTweening(transform))
+            if (_isMoving && !_movementTween.IsActive())
                 StopMovement();
         }
 
         private void DoMovement()
         {
-            isMoving = true;
-            transform.DOPath(points, GameParameters.BasicMovementSpeed). //путь по точкам
+            _isMoving = true;
+            _movementTween = transform.DOPath(points, GameParameters.BasicMovementSpeed). //путь по точкам
                 SetLookAt(transform.position). //персонаж "смотрит", куда идет
                 SetLookAt(0.01f). //процент "осматриваемого" пути
                 SetSpeedBased(true). //движение задаётся через скорость
-                SetEase(Ease.Linear); //без плавного затухания движения
+                SetEase(Ease.Linear). //без плавного затухания движения
+                SetId(GameParameters.MovementDOTweenTag); //тег для поиска на всякий случай
         }
 
         private void StopMovement()
         {
-            isMoving = false;
+            _isMoving = false;
             InGameEventManager.FinishPath();
         }
     }

@@ -23,6 +23,7 @@ namespace Assets.Scripts
             var positionCount = _lineRenderer.positionCount;
             Points = new Vector3[positionCount];
             _lineRenderer.GetPositions(Points);
+            //нам нужны позиции без сдвига
             Points = Points.Select(point => new Vector3(point.x + transform.position.x, point.y, point.z + transform.position.z)).ToArray();
 
             UnPick();
@@ -70,8 +71,6 @@ namespace Assets.Scripts
 
         void MakeTheChoice(Path path)
         {
-            if (path.Equals(this))
-                return;
             _isAnyPathChosen = true;
         }
     }
