@@ -10,11 +10,8 @@ namespace Assets.Scripts
     {
         [Inject]
         GameParameters _gameParameters;
-        [SerializeField]
-        bool _isLooped;
         LineRenderer _lineRenderer;
         bool _isAnyPathChosen;
-        public bool IsLooped { get => _isLooped; }
         public Vector3[] Points { get; private set; }
 
         private void Start()
@@ -38,8 +35,8 @@ namespace Assets.Scripts
             InGameEventManager.PathWasFinished -= SetTheChoiceAvailableAgain;
         }
 
-        public void Pick() => _lineRenderer.material = _gameParameters.PickedPathMaterial;
-        public void UnPick() => _lineRenderer.material = _gameParameters.NotPickedPathMaterial;
+        private void Pick() => _lineRenderer.material = _gameParameters.PickedPathMaterial;
+        private void UnPick() => _lineRenderer.material = _gameParameters.NotPickedPathMaterial;
 
         //наверное, стоило делать через подписку/отписку, но OnPointer<...> все равно удобнее
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

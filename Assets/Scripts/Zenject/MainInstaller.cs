@@ -7,6 +7,9 @@ public class MainInstaller : MonoInstaller
     GameParameters _gameParameters;
     public override void InstallBindings()
     {
-        Container.Bind<GameParameters>().FromInstance(_gameParameters).AsSingle();
+        if (_gameParameters != null)
+            Container.Bind<GameParameters>().FromInstance(_gameParameters).AsSingle();
+        else 
+            throw new System.Exception("No GameParameters found!");
     }
 }
