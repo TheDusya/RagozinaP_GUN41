@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Assets.Scripts
 {
     [RequireComponent(typeof(LineRenderer))]
-    internal class Path : MonoBehaviour
+    public class Path : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [Inject]
         GameParameters _gameParameters;
@@ -23,5 +25,8 @@ namespace Assets.Scripts
 
         public void Pick() => _lineRenderer.material = _gameParameters.PickedPathMaterial;
         public void UnPick() => _lineRenderer.material = _gameParameters.NotPickedPathMaterial;
+
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => Pick();
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => UnPick();
     }
 }
