@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -22,8 +23,18 @@ namespace Assets.Scripts
             var positionCount = _lineRenderer.positionCount;
             Points = new Vector3[positionCount];
             _lineRenderer.GetPositions(Points);
-            _lineRenderer.material = _gameParameters.NotPickedPathMaterial;
+            Points = Points.Select(point => new Vector3(point.x + transform.position.x, point.y, point.z + transform.position.z)).ToArray();
+
+            UnPick();
             _isAnyPathChosen = false;
+            InGameEventManager.PathWasChosen += MakeTheChoice;
+            InGameEventManager.PathWasFinished += SetTheChoiceAvailableAgain;
+        }
+
+        private void OnDestroy()
+        {
+            InGameEventManager.PathWasChosen -= MakeTheChoice;
+            InGameEventManager.PathWasFinished -= SetTheChoiceAvailableAgain;
         }
 
         public void Pick() => _lineRenderer.material = _gameParameters.PickedPathMaterial;
@@ -49,6 +60,19 @@ namespace Assets.Scripts
             Pick();
             _isAnyPathChosen = true;
             InGameEventManager.ChoosePath(this);
+        }
+
+        void SetTheChoiceAvailableAgain()
+        {
+            UnPick();
+            _isAnyPathChosen = false;
+        }
+
+        void MakeTheChoice(Path path)
+        {
+            if (path.Equals(this))
+                return;
+            _isAnyPathChosen = true;
         }
     }
 }

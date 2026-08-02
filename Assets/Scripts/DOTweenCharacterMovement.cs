@@ -7,6 +7,7 @@ namespace Assets.Scripts
     internal class DOTweenCharacterMovement : MonoBehaviour
     {
         Vector3[] points = null;
+        bool isMoving = false;
         void Start() => InGameEventManager.PathWasChosen += SetPath;
         void OnDestroy() => InGameEventManager.PathWasChosen -= SetPath;
 
@@ -22,9 +23,27 @@ namespace Assets.Scripts
                 DoMovement();
             }
         }
+
+        private void Update()
+        {
+            if (isMoving && !DOTween.IsTweening(transform))
+                StopMovement();
+        }
+
         private void DoMovement()
         {
-            transform.DOPath(points, 10).SetLookAt(transform.position).SetLookAt(0.01f);
+            isMoving = true;
+            transform.DOPath(points, GameParameters.BasicMovementSpeed). //путь по точкам
+                SetLookAt(transform.position). //персонаж "смотрит", куда идет
+                SetLookAt(0.01f). //процент "осматриваемого" пути
+                SetSpeedBased(true). //движение задаётся через скорость
+                SetEase(Ease.Linear); //без плавного затухания движения
+        }
+
+        private void StopMovement()
+        {
+            isMoving = false;
+            InGameEventManager.FinishPath();
         }
     }
 }

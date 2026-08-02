@@ -13,4 +13,5 @@ public class GameParameters : ScriptableObject
 
     public const string IsCharacterMovingParameterName = "IsCharacterMoving";
     public const float SlowestMovementSquared = 0.005f;
+    public const float BasicMovementSpeed = 3;
 }
