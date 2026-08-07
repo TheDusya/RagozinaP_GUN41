@@ -11,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Weapons
+  - Enemies
+  - Pickups
+  - Scenery
+  - Missiles
+  - VFX
+  - Traps
   - 
   - 
   - 

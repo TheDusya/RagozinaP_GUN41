@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using Assets.Scripts.Parameters;
+using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -7,6 +9,7 @@ namespace Assets.Scripts
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerCharacter : Character
     {
         [Inject]
@@ -14,15 +17,24 @@ namespace Assets.Scripts
 
         float _runningSpeed;
         Rigidbody _rigidbody;
-        PlayerInput _playerInput;
+        Collider _collider;
+        int _groundLayer;
 
         float _currentSpeed;
+        float _oldRotation;
+        float _rotationGoal;
+        float _alreadyRotated;
+
         bool _isMovingHorisontally = false;
+        bool _isGrounded = true;
+        bool _isTurning = false;
 
         [Inject]
         public void OnEnable()
         {
+            _groundLayer = LayerMask.NameToLayer(NameConstants.LayerNames.GroundLayerName);
             _rigidbody = GetComponent<Rigidbody>();
+            _collider = GetComponent<CapsuleCollider>();
             SetParameters();
         }
 
@@ -39,14 +51,46 @@ namespace Assets.Scripts
         {
             if (_isMovingHorisontally)
                 DoHorisontalMovement();
+            if (_isTurning)
+                DoTurningMovement();
         }
-        public void DoHorisontalMovement()
+        private void DoHorisontalMovement()
         {
             Vector3 movement = transform.forward * _currentSpeed;
             Vector3 velocity = _rigidbody.velocity;
             velocity.x = movement.x;
             velocity.z = movement.z;
             _rigidbody.velocity = velocity;
+        }
+
+        private void DoTurningMovement()
+        {
+            if (Mathf.Abs(_rotationGoal) - Mathf.Abs(_alreadyRotated) >= _playerParameters.TurningThreshold)
+            {
+                var rotatedThisTime = _playerParameters.TurningSpeed * Time.deltaTime * Math.Sign(_rotationGoal);
+                transform.Rotate(0, rotatedThisTime, 0);
+                _alreadyRotated += rotatedThisTime;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.x, _oldRotation + _rotationGoal, transform.rotation.z);
+                _isTurning = false;
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            bool isStandingOnAGround = collision.gameObject.layer == _groundLayer;
+            bool isStandingOnAScenery = false; //TODO
+            if (isStandingOnAGround || isStandingOnAScenery)
+                _isGrounded = true; //может повлиять на запрыгивание на scenery, решить вопросец
+        }
+        private void OnCollisionExit(Collision collision)
+        {
+            bool isLeavingGround = collision.gameObject.layer == _groundLayer;
+            bool isLeavingScenery = false; //TODO
+            if (isLeavingGround || isLeavingScenery)
+                _isGrounded = false;
         }
 
         public override void Attack()
@@ -77,24 +121,29 @@ namespace Assets.Scripts
             _isMovingHorisontally = value.isPressed;
         }
 
-        private void Rotate(float degree)
+        private void SetRotationGoal(float degree)
         {
-            transform.Rotate(new Vector3(0, degree, 0));
+            if (_isTurning)
+                return; //one turning at a time!
+            _rotationGoal = degree;
+            _oldRotation = transform.rotation.eulerAngles.y;
+            _alreadyRotated = 0;
+            _isTurning = true;
         }
 
         public void OnBack()
         {
-            Rotate(180);
+            SetRotationGoal(180);
         }
         
         public void OnRight()
         {
-            Rotate(90);
+            SetRotationGoal(90);
         }
         
         public void OnLeft()
         {
-            Rotate(-90);
+            SetRotationGoal(-90);
         }
 
         public void OnRun(InputValue value)
@@ -104,7 +153,8 @@ namespace Assets.Scripts
 
         public void OnJump()
         {
-            throw new System.NotImplementedException();
+            if (_isGrounded)
+                _rigidbody.AddForce(Vector3.up * _playerParameters.JumpForce, ForceMode.Impulse);
         }
         #endregion
     }
