@@ -1,0 +1,1 @@
+﻿enum WeaponType { Pistol, Rifle, Shotgun, Launcher, Railgun, Axe}
