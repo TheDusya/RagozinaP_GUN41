@@ -24,6 +24,7 @@
             public const string IsRunningParameter = "IsRunning";
             public const string IsWalkingParameter = "IsWalking";
             public const string IsJumpingParameter = "IsJumping";
+            public const string IsCrouchingParameter = "IsCrouching";
         }
     }
 }

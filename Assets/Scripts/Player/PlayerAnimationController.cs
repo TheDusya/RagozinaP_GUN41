@@ -21,72 +21,42 @@ namespace Assets.Scripts.Player
             _signalBus = signalBus;
 
             _signalBus.Jump += OnJump;
-            _signalBus.Land += OnLand;
             _signalBus.Move += OnMove;
-            _signalBus.StopMoving += OnStopMoving;
             _signalBus.Run += OnRun;
-            _signalBus.StopRunning += OnStopRunning;
+            _signalBus.Crouch += OnCrouch;
         }
 
         public void Dispose()
         {
             _signalBus.Jump -= OnJump;
-            _signalBus.Land -= OnLand;
             _signalBus.Move -= OnMove;
-            _signalBus.StopMoving -= OnStopMoving;
             _signalBus.Run -= OnRun;
-            _signalBus.StopRunning -= OnStopRunning;
-
+            _signalBus.Crouch -= OnCrouch;
         }
 
-        public void OnJump()
-        {
-            //_isJumping = true;
-            _animator.SetBool(NameConstants.AnimatorParametersNames.IsJumpingParameter, true);
-        }
+        public void OnJump(bool isStarted) => _animator.SetBool(NameConstants.AnimatorParametersNames.IsJumpingParameter, isStarted);
+        public void OnRun(bool isStarted) => _animator.SetBool(NameConstants.AnimatorParametersNames.IsRunningParameter, isStarted);
+        public void OnCrouch(bool isStarted) => _animator.SetBool(NameConstants.AnimatorParametersNames.IsCrouchingParameter, isStarted);
 
-        public void OnLand()
-        {
-            //_isJumping = false;
-            _animator.SetBool(NameConstants.AnimatorParametersNames.IsJumpingParameter, false);
-        }
-        public void OnMove(MovementDirection direction)
+        public void OnMove(MovementDirection direction, bool isStarted)
         {
             switch (direction)
             {
                 case MovementDirection.Forward:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveZParameter, 1);
-                    _zMovementIsZero = false;
+                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveZParameter, isStarted ? 1 : 0);
+                    _zMovementIsZero = !isStarted;
                     break;
                 case MovementDirection.Backward:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveZParameter, -1);
-                    _zMovementIsZero = false;
+                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveZParameter, isStarted ? -1 : 0);
+                    _zMovementIsZero = !isStarted;
                     break;
                 case MovementDirection.Right:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveXParameter, 1);
-                    _xMovementIsZero = false;
+                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveXParameter, isStarted ? 1 : 0);
+                    _xMovementIsZero = !isStarted;
                     break;
                 case MovementDirection.Left:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveXParameter, -1);
-                    _xMovementIsZero = false;
-                    break;
-                default:
-                    Debug.LogError("Unexpected MovementDirection value");
-                    break;
-            }
-            _animator.SetBool(NameConstants.AnimatorParametersNames.IsWalkingParameter, true);
-        }
-        public void OnStopMoving(MovementDirection direction)
-        {
-            switch (direction)
-            {
-                case MovementDirection.Forward or MovementDirection.Backward:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveZParameter, 0);
-                    _zMovementIsZero = true;
-                    break;
-                case MovementDirection.Right or MovementDirection.Left:
-                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveXParameter, 0);
-                    _xMovementIsZero = true;
+                    _animator.SetFloat(NameConstants.AnimatorParametersNames.MoveXParameter, isStarted ? -1 : 0);
+                    _xMovementIsZero = !isStarted;
                     break;
                 default:
                     Debug.LogError("Unexpected MovementDirection value");
@@ -94,7 +64,5 @@ namespace Assets.Scripts.Player
             }
             _animator.SetBool(NameConstants.AnimatorParametersNames.IsWalkingParameter, !_zMovementIsZero || !_xMovementIsZero);
         }
-        public void OnRun() => _animator.SetBool(NameConstants.AnimatorParametersNames.IsRunningParameter, true);
-        public void OnStopRunning() => _animator.SetBool(NameConstants.AnimatorParametersNames.IsRunningParameter, false);
     }
 }

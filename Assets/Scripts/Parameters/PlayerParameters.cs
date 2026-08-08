@@ -15,6 +15,8 @@ namespace Assets.Scripts
         public float TurningThreshold = 0.001f;
         public float MouseDeadZone = 10f;
         public float RaycastGroundDetectionDist = 0.05f;
+        public float FeetOffset = 0.01f;
+        public float CrouchColliderShlinkCoeff = 0.5f;
 
         public WeaponType StartingWeaponType;
     }

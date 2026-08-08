@@ -8,24 +8,24 @@ namespace Assets.Scripts.Player
 {
     public class PlayerSignalBus : MonoBehaviour
     {
-        public event Action<MovementDirection> Move;
-        public event Action<MovementDirection> StopMoving;
-        public event Action Jump;
-        public event Action Land;
-        public event Action Run;
-        public event Action StopRunning;
+        public event Action<MovementDirection, bool> Move;
+        public event Action<bool> Jump;
+        public event Action<bool> Run;
+        public event Action<bool> Crouch;
 
-        public void OnForward(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Forward);
+        public void OnForward(InputValue value) => Move?.Invoke(MovementDirection.Forward, value.isPressed);
 
-        public void OnBack(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Backward);
+        public void OnBack(InputValue value) => Move?.Invoke(MovementDirection.Backward, value.isPressed);
 
-        public void OnRight(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Right);
+        public void OnRight(InputValue value) => Move?.Invoke(MovementDirection.Right, value.isPressed);
 
-        public void OnLeft(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Left);
+        public void OnLeft(InputValue value) => Move?.Invoke(MovementDirection.Left, value.isPressed);
 
-        public void OnRun(InputValue value) => (value.isPressed ? Run : StopRunning)?.Invoke();
+        public void OnRun(InputValue value) => Run?.Invoke(value.isPressed);
 
-        public void OnJump() => Jump?.Invoke();
-        public void OnLand() => Land?.Invoke();
+        public void OnCrouch(InputValue value) => Crouch?.Invoke(value.isPressed);
+
+        public void OnJump() => Jump?.Invoke(true);
+        public void OnLand() => Jump?.Invoke(false);
     }
 }

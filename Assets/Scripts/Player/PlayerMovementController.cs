@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -8,7 +9,7 @@ namespace Assets.Scripts
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerMovementController : Character //TODO: fix classes
     {
         [Inject]
@@ -16,23 +17,29 @@ namespace Assets.Scripts
         [Inject]
         PlayerSignalBus _signalBus;
 
+        float _originalColliderHeight;
+        float _originalColliderY;
+        float _smallColliderY;
         float _runningSpeed;
-        Rigidbody _rigidbody;
-        Collider _collider; 
+        float _currentSpeed;
+        Vector3 _horisontalMovingVector = Vector3.zero;
+        
         int _groundAndSceneryLayer;
         Vector3 _feetPosition; 
-
-        float _currentSpeed;
-
         bool _isGrounded = true;
-        Vector3 _horisontalMovingVector = Vector3.zero;
+
+        Rigidbody _rigidbody;
+        CapsuleCollider _collider; 
 
         [Inject]
         public void OnEnable()
         {
             _groundAndSceneryLayer = LayerMask.GetMask(NameConstants.LayerNames.GroundLayer, NameConstants.LayerNames.SceneryLayer);
             _rigidbody = GetComponent<Rigidbody>();
-            _collider = GetComponent<Collider>();
+            _collider = GetComponent<CapsuleCollider>();
+            _originalColliderHeight = _collider.height;
+            _originalColliderY = _collider.center.y;
+            _smallColliderY = (_collider.center.y * _playerParameters.CrouchColliderShlinkCoeff);
             SetParameters();
             SetSubscriptions();
         }
@@ -49,10 +56,9 @@ namespace Assets.Scripts
         public void SetSubscriptions()
         {
             _signalBus.Move += Move;
-            _signalBus.StopMoving += StopMoving;
             _signalBus.Run += Run;
-            _signalBus.StopRunning += StopRunning;
             _signalBus.Jump += Jump;
+            _signalBus.Crouch += Crouch;
         }
 
         public void FixedUpdate()
@@ -82,7 +88,7 @@ namespace Assets.Scripts
         private void UpdateGroundedStatus()
         {
             bool wasGrounded = _isGrounded;
-            var feetPosition = new Vector3(_collider.bounds.center.x, _collider.bounds.min.y + 0.03f, _collider.bounds.center.z); //и таак сойдет
+            var feetPosition = new Vector3(_collider.bounds.center.x, _collider.bounds.min.y+_playerParameters.FeetOffset, _collider.bounds.center.z);
             _isGrounded = Physics.Raycast(feetPosition, -transform.up, out _, _playerParameters.RaycastGroundDetectionDist, _groundAndSceneryLayer);
             if (_isGrounded && !wasGrounded)
                 _signalBus.OnLand();
@@ -114,52 +120,50 @@ namespace Assets.Scripts
         }
         #region PlayerInput
 
-        private void Move(MovementDirection direction)
+        private void Move(MovementDirection direction, bool isStarted)
         {
             switch (direction)
             {
-                case MovementDirection.Forward: _horisontalMovingVector.z = 1;
+                case MovementDirection.Forward: _horisontalMovingVector.z = isStarted ? 1 : 0;
                     break;
-                case MovementDirection.Backward: _horisontalMovingVector.z = -1;
+                case MovementDirection.Backward: _horisontalMovingVector.z = isStarted ? -1 : 0;
                     break;
-                case MovementDirection.Right: _horisontalMovingVector.x = 1;
+                case MovementDirection.Right: _horisontalMovingVector.x = isStarted ? 1 : 0;
                     break;
-                case MovementDirection.Left: _horisontalMovingVector.x = -1;
+                case MovementDirection.Left: _horisontalMovingVector.x = isStarted ? -1 : 0;
                     break;
                 default: Debug.LogError("Unknown direction!");
                     break;
             }
         }
 
-        private void StopMoving(MovementDirection direction)
+        public void Run(bool isStarted) => _currentSpeed = isStarted ? _runningSpeed : _walkingSpeed;
+        public void Jump(bool isStarted)
         {
-            switch (direction)
-            {
-                case MovementDirection.Forward or MovementDirection.Backward: _horisontalMovingVector.z = 0;
-                    break;
-                case MovementDirection.Right or MovementDirection.Left: _horisontalMovingVector.x = 0;
-                    break;
-                default: Debug.LogError("Unknown direction!");
-                    break;
-            }
-        }
-
-        public void Run() => _currentSpeed = _runningSpeed;
-        public void StopRunning() => _currentSpeed = _walkingSpeed;
-        public void Jump()
-        {
-            if (_isGrounded)
+            if (isStarted && _isGrounded)
                 _rigidbody.AddForce(Vector3.up * _playerParameters.JumpForce, ForceMode.Impulse);
+        }
+        public void Crouch(bool isStarted)
+        {
+            if (isStarted)
+            {
+                _collider.height = _originalColliderHeight * _playerParameters.CrouchColliderShlinkCoeff;
+                _collider.center = new Vector3(_collider.center.x, _smallColliderY, _collider.center.z);
+            }
+            else
+            {
+                _collider.height = _originalColliderHeight;
+                _collider.center = new Vector3(_collider.center.x, _originalColliderY, _collider.center.z);
+            }
         }
         #endregion
 
         public void OnDestroy()
         {
             _signalBus.Move -= Move;
-            _signalBus.StopMoving -= StopMoving;
             _signalBus.Run -= Run;
-            _signalBus.StopRunning -= StopRunning;
             _signalBus.Jump -= Jump;
+            _signalBus.Crouch -= Crouch;
         }
     }
 }
