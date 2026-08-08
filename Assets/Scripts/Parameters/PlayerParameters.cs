@@ -12,7 +12,8 @@ namespace Assets.Scripts
         public float StrikePower = 10;
         public float JumpForce = 2;
         public float TurningSpeed = 2;
-        public float TurningThreshold = 0.01f;
+        public float TurningThreshold = 0.001f;
+        public float mouseDeadZone = 10f;
 
         public WeaponType StartingWeaponType;
     }

@@ -17,27 +17,27 @@
                 },
                 {
                     "name": "Left",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "d0fc6bc6-1b20-4fa3-9765-2a7fc10219f7",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Back",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "aa0f8bf0-6642-461a-9b7d-49ff5567829c",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Right",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "4a621802-2cac-4ced-b97f-b82411a1d9b8",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

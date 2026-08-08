@@ -4,12 +4,12 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerCharacter : Character
     {
         [Inject]
@@ -17,7 +17,6 @@ namespace Assets.Scripts
 
         float _runningSpeed;
         Rigidbody _rigidbody;
-        Collider _collider;
         int _groundLayer;
 
         float _currentSpeed;
@@ -28,13 +27,13 @@ namespace Assets.Scripts
         bool _isMovingHorisontally = false;
         bool _isGrounded = true;
         bool _isTurning = false;
+        Vector3 _horisontalMovingVector = Vector3.zero;
 
         [Inject]
         public void OnEnable()
         {
             _groundLayer = LayerMask.NameToLayer(NameConstants.LayerNames.GroundLayerName);
             _rigidbody = GetComponent<Rigidbody>();
-            _collider = GetComponent<CapsuleCollider>();
             SetParameters();
         }
 
@@ -51,31 +50,23 @@ namespace Assets.Scripts
         {
             if (_isMovingHorisontally)
                 DoHorisontalMovement();
-            if (_isTurning)
-                DoTurningMovement();
         }
         private void DoHorisontalMovement()
         {
-            Vector3 movement = transform.forward * _currentSpeed;
+            Vector3 cameraForward = Camera.main.transform.forward;
+            Vector3 cameraRight = Camera.main.transform.right;
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            Vector3 movement = (cameraForward * _horisontalMovingVector.z +
+                                cameraRight * _horisontalMovingVector.x) * _currentSpeed;
+
             Vector3 velocity = _rigidbody.velocity;
             velocity.x = movement.x;
             velocity.z = movement.z;
             _rigidbody.velocity = velocity;
-        }
-
-        private void DoTurningMovement()
-        {
-            if (Mathf.Abs(_rotationGoal) - Mathf.Abs(_alreadyRotated) >= _playerParameters.TurningThreshold)
-            {
-                var rotatedThisTime = _playerParameters.TurningSpeed * Time.deltaTime * Math.Sign(_rotationGoal);
-                transform.Rotate(0, rotatedThisTime, 0);
-                _alreadyRotated += rotatedThisTime;
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, _oldRotation + _rotationGoal, transform.rotation.z);
-                _isTurning = false;
-            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -117,33 +108,40 @@ namespace Assets.Scripts
         {
             bool stopPressing = !value.isPressed;
             if (stopPressing)
-                _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
-            _isMovingHorisontally = value.isPressed;
+                _horisontalMovingVector.z = 0;
+            else
+                _horisontalMovingVector.z = 1;
+            _isMovingHorisontally |= value.isPressed;
         }
 
-        private void SetRotationGoal(float degree)
+        public void OnBack(InputValue value)
         {
-            if (_isTurning)
-                return; //one turning at a time!
-            _rotationGoal = degree;
-            _oldRotation = transform.rotation.eulerAngles.y;
-            _alreadyRotated = 0;
-            _isTurning = true;
-        }
-
-        public void OnBack()
-        {
-            SetRotationGoal(180);
+            bool stopPressing = !value.isPressed;
+            if (stopPressing)
+                _horisontalMovingVector.z = 0;
+            else
+                _horisontalMovingVector.z = -1;
+            _isMovingHorisontally |= value.isPressed;
         }
         
-        public void OnRight()
+        public void OnRight(InputValue value)
         {
-            SetRotationGoal(90);
+            bool stopPressing = !value.isPressed;
+            if (stopPressing)
+                _horisontalMovingVector.x = 0;
+            else
+                _horisontalMovingVector.x = 1;
+            _isMovingHorisontally |= value.isPressed;
         }
         
-        public void OnLeft()
+        public void OnLeft(InputValue value)
         {
-            SetRotationGoal(-90);
+            bool stopPressing = !value.isPressed;
+            if (stopPressing)
+                _horisontalMovingVector.x= 0;
+            else
+                _horisontalMovingVector.x = -1;
+            _isMovingHorisontally |= value.isPressed;
         }
 
         public void OnRun(InputValue value)
