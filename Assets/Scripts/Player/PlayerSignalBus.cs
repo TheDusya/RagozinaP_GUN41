@@ -15,8 +15,6 @@ namespace Assets.Scripts.Player
         public event Action Run;
         public event Action StopRunning;
 
-        #region PlayerInput
-
         public void OnForward(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Forward);
 
         public void OnBack(InputValue value) => (value.isPressed ? Move : StopMoving)?.Invoke(MovementDirection.Backward);
@@ -29,6 +27,5 @@ namespace Assets.Scripts.Player
 
         public void OnJump() => Jump?.Invoke();
         public void OnLand() => Land?.Invoke();
-        #endregion
     }
 }

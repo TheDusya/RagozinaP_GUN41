@@ -13,7 +13,8 @@ namespace Assets.Scripts
         public float JumpForce = 2;
         public float TurningSpeed = 2;
         public float TurningThreshold = 0.001f;
-        public float mouseDeadZone = 10f;
+        public float MouseDeadZone = 10f;
+        public float RaycastGroundDetectionDist = 0.05f;
 
         public WeaponType StartingWeaponType;
     }

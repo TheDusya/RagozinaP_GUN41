@@ -16,8 +16,9 @@ MonoBehaviour:
   WalkingSpeed: 4
   RunningSpeed: 10
   StrikePower: 10
-  JumpForce: 5
+  JumpForce: 40
   TurningSpeed: 5
   TurningThreshold: 0.002
-  mouseDeadZone: 10
+  MouseDeadZone: 10
+  RaycastGroundDetectionDist: 0.1
   StartingWeaponType: 0

@@ -1,18 +1,15 @@
 ﻿using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
-using DG.Tweening;
-using ModestTree;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerCharacter : Character
+    [RequireComponent(typeof(Collider))]
+    public class PlayerMovementController : Character //TODO: fix classes
     {
         [Inject]
         PlayerParameters _playerParameters;
@@ -21,19 +18,21 @@ namespace Assets.Scripts
 
         float _runningSpeed;
         Rigidbody _rigidbody;
+        Collider _collider; 
         int _groundAndSceneryLayer;
+        Vector3 _feetPosition; 
 
         float _currentSpeed;
 
-        bool _isMovingHorisontally = false;
         bool _isGrounded = true;
         Vector3 _horisontalMovingVector = Vector3.zero;
 
         [Inject]
         public void OnEnable()
         {
-            _groundAndSceneryLayer = LayerMask.GetMask(NameConstants.LayerNames.GroundLayerName, NameConstants.LayerNames.SceneryLayerName);
+            _groundAndSceneryLayer = LayerMask.GetMask(NameConstants.LayerNames.GroundLayer, NameConstants.LayerNames.SceneryLayer);
             _rigidbody = GetComponent<Rigidbody>();
+            _collider = GetComponent<Collider>();
             SetParameters();
             SetSubscriptions();
         }
@@ -83,9 +82,15 @@ namespace Assets.Scripts
         private void UpdateGroundedStatus()
         {
             bool wasGrounded = _isGrounded;
-            _isGrounded = Physics.Raycast(transform.position, -transform.up, out _, Mathf.Infinity, _groundAndSceneryLayer);
+            var feetPosition = new Vector3(_collider.bounds.center.x, _collider.bounds.min.y + 0.03f, _collider.bounds.center.z); //и таак сойдет
+            _isGrounded = Physics.Raycast(feetPosition, -transform.up, out _, _playerParameters.RaycastGroundDetectionDist, _groundAndSceneryLayer);
             if (_isGrounded && !wasGrounded)
                 _signalBus.OnLand();
+        }
+        public void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(_feetPosition, -transform.up);
         }
 
         public override void Attack()

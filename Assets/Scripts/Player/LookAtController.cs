@@ -20,13 +20,13 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
-            _layerMask = ~(1 << LayerMask.NameToLayer(NameConstants.LayerNames.PlayerLayerName));
+            _layerMask = ~(1 << LayerMask.NameToLayer(NameConstants.LayerNames.PlayerLayer));
         }
 
         public void FixedUpdate()
         {
             var mousePos = Mouse.current.position.ReadValue();
-            if (_prevMousePos != Vector2.zero && Vector2.Distance(_prevMousePos, mousePos) > _playerParameters.mouseDeadZone)
+            if (_prevMousePos != Vector2.zero && Vector2.Distance(_prevMousePos, mousePos) > _playerParameters.MouseDeadZone)
             {
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
                 if (Physics.Raycast(ray, out var hit, maxDistance: Mathf.Infinity, layerMask: _layerMask))
