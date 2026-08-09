@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Weapons;
+using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -6,7 +8,11 @@ namespace Assets.Scripts
     {
         protected IRangedWeapon _rangedWeapon = null;
         protected IMeleeWeapon _meleeWeapon = null;
-        protected float _walkingSpeed;
+        [SerializeField, AllowsNull]
+        protected Transform _rightSocket;
+        [SerializeField, AllowsNull]
+        protected Transform _leftSocket;
+
         public abstract void Attack();
         public override abstract void Die();
     }

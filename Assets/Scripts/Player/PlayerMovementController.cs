@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -10,7 +9,7 @@ namespace Assets.Scripts
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class PlayerMovementController : Character //TODO: fix classes
+    public class PlayerMovementController : MonoBehaviour
     {
         [Inject]
         PlayerParameters _playerParameters;
@@ -19,13 +18,13 @@ namespace Assets.Scripts
 
         float _originalColliderHeight;
         float _originalColliderY;
-        float _smallColliderY;
+
         float _runningSpeed;
+        float _walkingSpeed;
         float _currentSpeed;
         Vector3 _horisontalMovingVector = Vector3.zero;
         
         int _groundAndSceneryLayer;
-        Vector3 _feetPosition; 
         bool _isGrounded = true;
 
         Rigidbody _rigidbody;
@@ -39,15 +38,12 @@ namespace Assets.Scripts
             _collider = GetComponent<CapsuleCollider>();
             _originalColliderHeight = _collider.height;
             _originalColliderY = _collider.center.y;
-            _smallColliderY = (_collider.center.y * _playerParameters.CrouchColliderShlinkCoeff);
             SetParameters();
             SetSubscriptions();
         }
 
-        public override void SetParameters()
+        public void SetParameters()
         {
-            _health = _playerParameters.MaxHealth;
-            _maxHealth = _playerParameters.MaxHealth;
             _runningSpeed = _playerParameters.RunningSpeed;
             _walkingSpeed = _playerParameters.WalkingSpeed;
             _currentSpeed = _walkingSpeed;
@@ -66,6 +62,7 @@ namespace Assets.Scripts
             DoHorisontalMovement();
             UpdateGroundedStatus();
         }
+
         private void DoHorisontalMovement()
         {
             if (_horisontalMovingVector.z == 0 && _horisontalMovingVector.x == 0)
@@ -92,31 +89,6 @@ namespace Assets.Scripts
             _isGrounded = Physics.Raycast(feetPosition, -transform.up, out _, _playerParameters.RaycastGroundDetectionDist, _groundAndSceneryLayer);
             if (_isGrounded && !wasGrounded)
                 _signalBus.OnLand();
-        }
-        public void OnDrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawRay(_feetPosition, -transform.up);
-        }
-
-        public override void Attack()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            throw new System.NotImplementedException();
-        }
-        
-        public override void Die()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Weapon GetWeapon<Weapon>() 
-        {
-            throw new System.NotImplementedException("GetWeaponOfType");
         }
         #region PlayerInput
 
@@ -148,7 +120,7 @@ namespace Assets.Scripts
             if (isStarted)
             {
                 _collider.height = _originalColliderHeight * _playerParameters.CrouchColliderShlinkCoeff;
-                _collider.center = new Vector3(_collider.center.x, _smallColliderY, _collider.center.z);
+                _collider.center = new Vector3(_collider.center.x, (_collider.center.y * _playerParameters.CrouchColliderShlinkCoeff), _collider.center.z);
             }
             else
             {
