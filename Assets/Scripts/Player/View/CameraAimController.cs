@@ -12,14 +12,11 @@ public class CameraAimController : MonoBehaviour
 {
     [Inject]
     PlayerSignalBus _signalBus;
-
     [Inject]
     AimingParameters _aimingParameters;
 
     float _normalFOV;
     float _aimingFOV;
-
-    private Cinemachine3rdPersonFollow _thirdPersonFollow;
 
     CinemachineVirtualCamera _virtualCamera;
 

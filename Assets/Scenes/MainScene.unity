@@ -339,6 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1920242646dd3bb41b87b12d16edd475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aimingParameters: {fileID: 0}
+  _playerParameters: {fileID: 0}
+  _weaponParameters: {fileID: 0}
+  _playerSignalBus: {fileID: 0}
 --- !u!114 &1361493110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,5 +408,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 329044850}
-  - {fileID: 163021864}
   - {fileID: 1361493111}
+  - {fileID: 163021864}

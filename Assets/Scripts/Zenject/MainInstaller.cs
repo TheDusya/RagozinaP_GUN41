@@ -14,8 +14,6 @@ public class MainInstaller : MonoInstaller
     WeaponParameters _weaponParameters;
     [SerializeField]
     PlayerSignalBus _playerSignalBus;
-    [SerializeField]
-    Transform _playerData; //Fix this!!!!!!!!!!!!!!!
     public override void InstallBindings()
     {
         if (_aimingParameters != null)
@@ -36,10 +34,5 @@ public class MainInstaller : MonoInstaller
             Container.Bind<PlayerSignalBus>().FromInstance(_playerSignalBus).AsSingle();
         else
             Debug.LogError("PlayerSignalBus not found!");
-
-        if (_playerData != null)
-            Container.Bind<Transform>().FromInstance(_playerData).AsSingle(); //Fix this!!!!!!!!!
-        else
-            Debug.LogError("PlayerData not found!");
     }
 }
