@@ -13,7 +13,6 @@ namespace Assets.Scripts
         [SerializeField, AllowsNull]
         protected Transform _leftSocket;
 
-        public abstract void Attack();
         public override abstract void Die();
     }
 }

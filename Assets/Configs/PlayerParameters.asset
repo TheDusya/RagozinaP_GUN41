@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f419cc41c7a8fb43a5a5a813a11bcb7, type: 3}
   m_Name: PlayerParameters
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  WalkingSpeed: 4
-  RunningSpeed: 10
-  StrikePower: 10
-  JumpForce: 70
-  TurningSpeed: 5
-  TurningThreshold: 0.002
-  MouseDeadZone: 10
-  RaycastGroundDetectionDist: 0.1
-  CrouchColliderShlinkCoeff: 0.5
-  StartingWeaponType: 0
+  _maxHealth: 100
+  _walkingSpeed: 5
+  _runningSpeed: 10
+  _strikePower: 10
+  _jumpForce: 70
+  _turningSpeed: 2
+  _turningThreshold: 0.001
+  _mouseUsualDeadZone: 5
+  _raycastGroundDetectionDist: 0.05
+  _feetOffset: 0.01
+  _crouchColliderShrinkCoeff: 0.5
+  _mouseAimingDeadZone: 5
+  _aimDuration: 1.8
+  _aimFOVShrinkCoeff: 0.5
+  _mouseSensitivity: 20
+  _startingWeaponType: 0

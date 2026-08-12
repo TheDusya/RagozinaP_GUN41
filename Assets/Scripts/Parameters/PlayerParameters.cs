@@ -1,23 +1,57 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     [CreateAssetMenu(fileName = "PlayerParameters")]
-    internal class PlayerParameters : ScriptableObject
+    public class PlayerParameters : ScriptableObject
     {
-        public float MaxHealth = 100;
-        public float WalkingSpeed = 5;
-        public float RunningSpeed = 10;
-        public float StrikePower = 10;
-        public float JumpForce = 2;
-        public float TurningSpeed = 2;
-        public float TurningThreshold = 0.001f;
-        public float MouseDeadZone = 10f;
-        public float RaycastGroundDetectionDist = 0.05f;
-        public float FeetOffset = 0.01f;
-        public float CrouchColliderShlinkCoeff = 0.5f;
+        [Header("Body parameters")]
+        [SerializeField]
+        private float _maxHealth = 100;
+        public float MaxHealth { get => _maxHealth; }
 
-        public WeaponType StartingWeaponType;
+        [SerializeField]
+        private float _walkingSpeed = 5;
+        public float WalkingSpeed { get => _walkingSpeed; }
+
+        [SerializeField]
+        private float _runningSpeed = 10;
+        public float RunningSpeed { get => _runningSpeed; }
+
+        [SerializeField]
+        private float _strikePower = 10;
+        public float StrikePower { get => _strikePower; }
+
+        [SerializeField]
+        private float _jumpForce = 2;
+        public float JumpForce { get => _jumpForce; }
+
+        [Header("Controls parameters")]
+        [SerializeField]
+        private float _turningSpeed = 2;
+        public float TurningSpeed { get => _turningSpeed; }
+
+        [SerializeField]
+        private float _turningThreshold = 0.001f;
+        public float TurningThreshold { get => _turningThreshold; }
+
+        [SerializeField]
+        private float _mouseUsualDeadZone = 10f;
+        public float MouseDeadZone { get => _mouseUsualDeadZone; }
+
+        [SerializeField]
+        private float _raycastGroundDetectionDist = 0.05f;
+        public float RaycastGroundDetectionDist { get => _raycastGroundDetectionDist; }
+
+        [SerializeField]
+        private float _feetOffset = 0.01f;
+        public float FeetOffset { get => _feetOffset; }
+
+        [SerializeField]
+        private float _crouchColliderShrinkCoeff = 0.5f;
+        public float CrouchColliderShrinkCoeff { get => _crouchColliderShrinkCoeff; }
+
     }
 }

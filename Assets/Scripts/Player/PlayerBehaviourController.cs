@@ -5,28 +5,29 @@ using Zenject;
 
 namespace Assets.Scripts.Player
 {
-    internal class PlayerBehaviourController : Character
+    public class PlayerBehaviourController : Character
     {
         [Inject]
         PlayerParameters _playerParameters; 
         public GameObject _weaponPrefab; //пока это тест
+        public Weapon _currentWeapon;
 
         public void OnEnable()
         { 
-            Weapon weapon = Instantiate(_weaponPrefab).GetComponent<Weapon>();
-            Transform handle = weapon.Handle;
+            _currentWeapon = Instantiate(_weaponPrefab).GetComponent<Weapon>();
+            Transform handle = _currentWeapon.Handle;
 
             if (handle != null)
             {
                 Vector3 positionOffset = _rightSocket.position - handle.position;
                 Quaternion rotationOffset = _rightSocket.rotation * Quaternion.Inverse(handle.rotation);
 
-                weapon.transform.SetPositionAndRotation(weapon.transform.position + positionOffset, 
-                                                                rotationOffset * weapon.transform.rotation);
+                _currentWeapon.transform.SetPositionAndRotation(_currentWeapon.transform.position + positionOffset, 
+                                                                rotationOffset * _currentWeapon.transform.rotation);
             }
             else
                 Debug.Log("No handle found!");
-            weapon.transform.SetParent(_rightSocket);
+            _currentWeapon.transform.SetParent(_rightSocket);
         }
         public override void SetParameters()
         {
@@ -35,9 +36,9 @@ namespace Assets.Scripts.Player
 
         }
 
-        public override void Attack()
+        public void RangedAttack()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public override void TakeDamage(float damage)
@@ -52,6 +53,14 @@ namespace Assets.Scripts.Player
         public Weapon GetWeapon<Weapon>()
         {
             throw new System.NotImplementedException("GetWeaponOfType");
+        }
+        public void OnDisable()
+        {
+            if (_currentWeapon != null)
+            {
+                Destroy(_currentWeapon.gameObject);
+                _currentWeapon = null;
+            }
         }
     }
 }

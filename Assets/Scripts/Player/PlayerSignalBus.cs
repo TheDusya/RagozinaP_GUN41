@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Player
@@ -12,6 +10,8 @@ namespace Assets.Scripts.Player
         public event Action<bool> Jump;
         public event Action<bool> Run;
         public event Action<bool> Crouch;
+        public event Action<bool> Aim;
+        public event Action<Vector2> MoveCamera;
 
         public void OnForward(InputValue value) => Move?.Invoke(MovementDirection.Forward, value.isPressed);
 
@@ -25,7 +25,12 @@ namespace Assets.Scripts.Player
 
         public void OnCrouch(InputValue value) => Crouch?.Invoke(value.isPressed);
 
+        public void OnAim(InputValue value) => Aim?.Invoke(value.isPressed);
+
+        public void OnMouseMove(InputValue value) => MoveCamera?.Invoke(value.Get<Vector2>());
+
         public void OnJump() => Jump?.Invoke(true);
         public void OnLand() => Jump?.Invoke(false);
+
     }
 }

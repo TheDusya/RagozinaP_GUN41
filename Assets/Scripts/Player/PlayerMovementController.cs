@@ -31,7 +31,7 @@ namespace Assets.Scripts
         CapsuleCollider _collider; 
 
         [Inject]
-        public void OnEnable()
+        public void Inject()
         {
             _groundAndSceneryLayer = LayerMask.GetMask(NameConstants.LayerNames.GroundLayer, NameConstants.LayerNames.SceneryLayer);
             _rigidbody = GetComponent<Rigidbody>();
@@ -119,8 +119,8 @@ namespace Assets.Scripts
         {
             if (isStarted)
             {
-                _collider.height = _originalColliderHeight * _playerParameters.CrouchColliderShlinkCoeff;
-                _collider.center = new Vector3(_collider.center.x, (_collider.center.y * _playerParameters.CrouchColliderShlinkCoeff), _collider.center.z);
+                _collider.height = _originalColliderHeight * _playerParameters.CrouchColliderShrinkCoeff;
+                _collider.center = new Vector3(_collider.center.x, (_collider.center.y * _playerParameters.CrouchColliderShrinkCoeff), _collider.center.z);
             }
             else
             {
