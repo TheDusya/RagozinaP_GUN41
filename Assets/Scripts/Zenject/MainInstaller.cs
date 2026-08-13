@@ -20,6 +20,7 @@ public class MainInstaller : MonoInstaller
             Container.Bind<AimingParameters>().FromInstance(_aimingParameters).AsSingle();
         else 
             Debug.LogError("AimingParameters not found!");
+
         if (_playerParameters != null)
             Container.Bind<PlayerParameters>().FromInstance(_playerParameters).AsSingle();
         else 

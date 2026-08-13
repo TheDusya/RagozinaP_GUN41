@@ -12,6 +12,7 @@ namespace Assets.Scripts.Player
         public event Action<bool> Crouch;
         public event Action<bool> Aim;
         public event Action<Vector2> MoveCamera;
+        public event Action<int> HealthUpdate;
 
         public void OnForward(InputValue value) => Move?.Invoke(MovementDirection.Forward, value.isPressed);
 
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Player
 
         public void OnJump() => Jump?.Invoke(true);
         public void OnLand() => Jump?.Invoke(false);
+        public void OnHealthUpdate(int health) => HealthUpdate?.Invoke(health);
 
     }
 }

@@ -29,6 +29,7 @@ namespace Assets.Scripts.Player
                 Debug.Log("No handle found!");
             _currentWeapon.transform.SetParent(_rightSocket);
         }
+
         public override void SetParameters()
         {
             _health = _playerParameters.MaxHealth;

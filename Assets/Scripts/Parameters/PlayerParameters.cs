@@ -9,8 +9,8 @@ namespace Assets.Scripts
     {
         [Header("Body parameters")]
         [SerializeField]
-        private float _maxHealth = 100;
-        public float MaxHealth { get => _maxHealth; }
+        private int _maxHealth = 100;
+        public int MaxHealth { get => _maxHealth; }
 
         [SerializeField]
         private float _walkingSpeed = 5;
