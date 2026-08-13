@@ -42,9 +42,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 2.3645778
-  m_TransitionOffset: 0.0036064286
-  m_ExitTime: 0.005004349
+  m_TransitionDuration: 0.81175244
+  m_TransitionOffset: 0.31300288
+  m_ExitTime: 0.000000012587418
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -352,9 +352,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 1.2441416
-  m_TransitionOffset: 0.55823964
-  m_ExitTime: 0.47430602
+  m_TransitionDuration: 2.118897
+  m_TransitionOffset: 0
+  m_ExitTime: 0.051037364
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -606,8 +606,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.67025083
-  m_TransitionOffset: 0
+  m_TransitionDuration: 0.9885039
+  m_TransitionOffset: 0.0135877
   m_ExitTime: 0.042499047
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -634,9 +634,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.6677406
   m_TransitionOffset: 0
-  m_ExitTime: 0.80569947
+  m_ExitTime: 0.11133711
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -650,7 +650,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Jump
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4395546445989458281}
