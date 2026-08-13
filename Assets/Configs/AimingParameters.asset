@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450436a7241eebb459b9f366ae70c8be, type: 3}
   m_Name: AimingParameters
   m_EditorClassIdentifier: 
-  _turningSpeed: 2
+  _turningSpeed: 1
   _mouseDeadZone: 5
   _aimFOVShrinkCoeff: 0.5
   _mouseSensitivity: 20
