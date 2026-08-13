@@ -36,11 +36,16 @@ https://assetstore.unity.com/packages/3d/props/guns/simple-low-poly-melee-weapon
     * Dark UI Kit by kΩsmaragd
 https://assetstore.unity.com/packages/2d/gui/dark-ui-kit-330700
   * Шрифты:
+
+    * Sjz by Denis Kukushkin
+https://fonts-online.ru/fonts/sjz
   * Анимации:
 
-    * все из mixamo.com
+    * все взяты из mixamo.com
   * Другое:
 
-    * Изображение кролика:
-https://commons.wikimedia.org/wiki/File:Rabbit\_clipart.svg
+    * Прицел: 
+https://commons.wikimedia.org/wiki/File:Sniper\_sight.png
+    * Патроны:
+https://commons.wikimedia.org/wiki/File:Heavy-bullets\_-\_Delapouite\_-\_white\_-\_game-icons.svg
 
