@@ -32,6 +32,10 @@ namespace Assets.Scripts.Player
         private void LateUpdate()
         {
             var mousePos = Mouse.current.position.ReadValue();
+            bool isInsideGameWindow = mousePos.x >= 0 && mousePos.y >= 0 &&
+                        mousePos.x <= Screen.width && mousePos.y <= Screen.height;
+            if (!isInsideGameWindow)
+                return;
             if (_prevMousePos != Vector2.positiveInfinity && Vector2.Distance(_prevMousePos, mousePos) > _deadMouseZone)
             {
                 Ray ray = Camera.main.ScreenPointToRay(mousePos);
