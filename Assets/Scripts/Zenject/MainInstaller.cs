@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.Enemies;
 using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class MainInstaller : MonoInstaller
 {
     [SerializeField]
     AimingParameters _aimingParameters;
+    [SerializeField]
+    EvilDoctorParameters _evilDoctorParameters;
     [SerializeField]
     PlayerParameters _playerParameters;
     [SerializeField]
@@ -20,6 +23,11 @@ public class MainInstaller : MonoInstaller
             Container.Bind<AimingParameters>().FromInstance(_aimingParameters).AsSingle();
         else 
             Debug.LogError("AimingParameters not found!");
+
+        if (_evilDoctorParameters != null)
+            Container.Bind<EvilDoctorParameters>().FromInstance(_evilDoctorParameters).AsSingle();
+        else 
+            Debug.LogError("EvilDoctorParameters not found!");
 
         if (_playerParameters != null)
             Container.Bind<PlayerParameters>().FromInstance(_playerParameters).AsSingle();

@@ -3,7 +3,7 @@
     public interface IState
     {
         public void Enter();
-        public void LateTick();
+        public void Tick();
         public void Exit();
     }
 }
