@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Weapons;
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts

@@ -1,5 +1,4 @@
 using Assets.Scripts;
-using Assets.Scripts.Enemies;
 using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
 using UnityEngine;

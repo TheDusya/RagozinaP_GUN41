@@ -1,8 +1,5 @@
-﻿using System.IO;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 namespace Assets.Scripts.Enemies
 {
@@ -23,9 +20,9 @@ namespace Assets.Scripts.Enemies
             _animator = GetComponent<Animator>();
             _signalBus = GetComponent<NPCSignalBus>();
         }
-        public void MoveTo()
-        {
-
+        public void MoveTo(Vector3 goal)
+        { //navmesh might be used here
+            transform.position = goal;
         }
         private void OnTriggerEnter(Collider other)
         {

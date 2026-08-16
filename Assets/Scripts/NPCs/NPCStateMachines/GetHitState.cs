@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Utilities;
 
 
 namespace Assets.Scripts.Enemies.NPCStateMachines

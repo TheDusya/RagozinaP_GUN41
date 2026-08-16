@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Interfaces;
-using Assets.Scripts.Parameters;
-using System;
+﻿using Assets.Scripts.Parameters;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;

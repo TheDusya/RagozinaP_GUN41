@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Interfaces;
-using Zenject;
+﻿using Assets.Scripts.Utilities;
 
 namespace Assets.Scripts.Enemies
 {

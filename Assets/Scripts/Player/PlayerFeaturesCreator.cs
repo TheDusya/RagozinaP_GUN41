@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Parameters;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Player

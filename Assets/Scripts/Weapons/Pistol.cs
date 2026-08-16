@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Parameters;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Weapons
 {
@@ -10,11 +8,6 @@ namespace Assets.Scripts.Weapons
         Transform _barrelEnd;
         int _maxBulletsNum;
         int _currentBulletsNum;
-        /*public void OnEnable()
-        {
-            _maxBulletsNum = _weaponParameters.MaxCapacity;
-            _currentBulletsNum = _maxBulletsNum; //Let's not overcomplicate things
-        }*/
 
         void IRangedWeapon.Attack(Vector3 direction)
         {
@@ -22,7 +15,6 @@ namespace Assets.Scripts.Weapons
                 MakeEmptySound();
             else
             {
-
                 _currentBulletsNum--;
             }
         }

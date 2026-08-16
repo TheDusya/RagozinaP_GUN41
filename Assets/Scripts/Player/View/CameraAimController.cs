@@ -1,9 +1,6 @@
-using Assets.Scripts;
 using Assets.Scripts.Parameters;
 using Assets.Scripts.Player;
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 

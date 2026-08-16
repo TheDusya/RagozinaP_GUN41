@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Interfaces;
+﻿using Assets.Scripts.Utilities;
 
 namespace Assets.Scripts.Enemies.NPCStateMachines
 {
-    internal class DeadState : IState
+    internal class DeadState : IState //???
     {
         public void Enter()
         {

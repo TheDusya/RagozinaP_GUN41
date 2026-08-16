@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Parameters;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Zenject;
 
 namespace Assets.Scripts.Player
 {
@@ -13,7 +10,6 @@ namespace Assets.Scripts.Player
         PlayerSignalBus _signalBus;
         bool _xMovementIsZero = true;
         bool _zMovementIsZero = false;
-        //Implementing all the states is crazy
 
         public PlayerAnimationController(Animator animator, PlayerSignalBus signalBus)
         {

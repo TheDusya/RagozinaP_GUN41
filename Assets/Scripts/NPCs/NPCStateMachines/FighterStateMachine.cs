@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Enemies.NPCStateMachines;
-using Assets.Scripts.Interfaces;
 using Assets.Scripts.Parameters;
+using Assets.Scripts.Utilities;
 using System;
 using UnityEngine;
 using Zenject;
@@ -23,7 +23,7 @@ namespace Assets.Scripts.Enemies
         public FighterStateMachine(Path path, Transform transform, NPCSignalBus signalBus, NPCParameters parameters)
         {
             _signalBus = signalBus;
-            _patrolState = new PatrolState(path, transform, parameters);
+            _patrolState = new PatrolState(path, transform, parameters.Speed);
             _currentState = _patrolState;
         }
 
