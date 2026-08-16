@@ -20,12 +20,6 @@ namespace Assets.Scripts.Parameters
         [SerializeField]
         private float _strikePower;
         public float StrikePower { get => _strikePower; }
-        [SerializeField]
-        private float _FOVRadius;
-        public float FOVRadius { get => _FOVRadius; }
-        [SerializeField, Range(0, 360)]
-        private float _FOVAngle;
-        public float FOVAngle { get => _FOVAngle; }
 
     }
 }

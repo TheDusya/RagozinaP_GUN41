@@ -1,18 +1,20 @@
-﻿using Assets.Scripts.Enemies.EnemyStateMachines;
+﻿using Assets.Scripts.Enemies.NPCStateMachines;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.Parameters;
+using System;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Enemies
 {
-    public class FighterStateMachine : StateMachine, ITickable
+    public class FighterStateMachine : StateMachine, ITickable, IDisposable
     {
         NPCSignalBus _signalBus;
 
         PatrolState _patrolState;
         ChaseState _chaseState;
         AttackState _attackState;
+        GetHitState _getHitState;
         BackstepState _backstepState;
         DeadState _deadState;
 
@@ -23,6 +25,11 @@ namespace Assets.Scripts.Enemies
             _signalBus = signalBus;
             _patrolState = new PatrolState(path, transform, parameters);
             _currentState = _patrolState;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

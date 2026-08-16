@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a771792698ef0da469bcd4bf7831b1ab, type: 3}
   m_Name: EvilDoctorParameters
   m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _speed: 0
-  _strikePower: 0
-  _FOVRadius: 0
-  _FOVAngle: 60
-  _obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
+  _maxHealth: 20
+  _speed: 3
+  _strikePower: 10

@@ -1,8 +1,9 @@
 ﻿using Assets.Scripts.Interfaces;
 
+
 namespace Assets.Scripts.Enemies.NPCStateMachines
 {
-    internal class DeadState : IState
+    internal class GetHitState : IState
     {
         public void Enter()
         {

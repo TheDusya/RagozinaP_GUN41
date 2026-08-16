@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Enemies.EnemyStateMachines
+namespace Assets.Scripts.Enemies.NPCStateMachines
 {
     internal class BackstepState : IState
     {

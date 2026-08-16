@@ -16,6 +16,8 @@
             public const string RunState = "Run";
             public const string JumpState = "Jump";
             public const string CrouchState = "Crouch";
+            public const string AttackState = "Attack";
+            public const string GetHitState = "Attack";
         }
         public static class AnimatorParametersNames
         {
@@ -25,6 +27,10 @@
             public const string IsWalkingParameter = "IsWalking";
             public const string IsJumpingParameter = "IsJumping";
             public const string IsCrouchingParameter = "IsCrouching";
+
+            public const string PunchParameter = "Punch";
+            public const string GetHitParameter = "GetHit";
+            public const string DieParameter = "Die";
         }
     }
 }
