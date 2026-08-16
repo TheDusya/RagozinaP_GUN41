@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Utilities;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     public abstract class StateMachine
     {

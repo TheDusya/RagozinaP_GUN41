@@ -524,9 +524,9 @@ GameObject:
   - component: {fileID: 3614302081935255717}
   - component: {fileID: 4052066000007531502}
   - component: {fileID: 2168991461831716056}
-  - component: {fileID: 5020549968706952376}
   - component: {fileID: 7338646398107475723}
-  - component: {fileID: 5364967675166892486}
+  - component: {fileID: 2079808159949559937}
+  - component: {fileID: 3703230365450678125}
   m_Layer: 0
   m_Name: EvilDoctor
   m_TagString: Untagged
@@ -615,7 +615,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.61726
   m_Center: {x: 0, y: 1.1806691, z: 0.28608894}
---- !u!114 &5020549968706952376
+--- !u!114 &7338646398107475723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473171902758989044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8286f55c342f1af4daa1aab4de60efe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _FOVRadius: 2
+  _FOVAngle: 100
+--- !u!114 &2079808159949559937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473171902758989044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f674ceb3988936741af544be5b135c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3703230365450678125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -631,32 +657,6 @@ MonoBehaviour:
   _leftSocket: {fileID: 0}
   _agent: {fileID: 0}
   _path: {fileID: 0}
---- !u!114 &7338646398107475723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3473171902758989044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8286f55c342f1af4daa1aab4de60efe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _FOVRadius: 2
-  _FOVAngle: 100
---- !u!114 &5364967675166892486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3473171902758989044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f674ceb3988936741af544be5b135c7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4282214249041524410
 GameObject:
   m_ObjectHideFlags: 0

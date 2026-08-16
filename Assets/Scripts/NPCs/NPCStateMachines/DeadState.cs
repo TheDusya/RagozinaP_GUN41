@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Utilities;
 
-namespace Assets.Scripts.Enemies.NPCStateMachines
+namespace Assets.Scripts.NPCs.NPCStateMachines
 {
     internal class DeadState : IState //???
     {

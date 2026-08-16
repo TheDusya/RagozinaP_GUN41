@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     public class EvilDoctor : Enemy, IAttacker
     {

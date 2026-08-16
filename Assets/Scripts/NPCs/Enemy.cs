@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(NPCSignalBus))]
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Enemies
         }
         private void OnTriggerEnter(Collider other)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

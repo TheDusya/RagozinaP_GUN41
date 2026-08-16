@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Enemies.NPCStateMachines;
+﻿using Assets.Scripts.NPCs.NPCStateMachines;
 using Assets.Scripts.Parameters;
 using Assets.Scripts.Utilities;
 using System;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     public class FighterStateMachine : StateMachine, ITickable, IDisposable
     {

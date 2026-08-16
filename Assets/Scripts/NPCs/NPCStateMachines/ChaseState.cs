@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Utilities;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     internal class ChaseState : IState
     {

@@ -2,7 +2,7 @@
 using Assets.Scripts.Utilities;
 using System;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     public class AttackState : IState, IDisposable
     {

@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Parameters;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     public class DefaultEnemyAnimationController : NPCAnimationController
     {

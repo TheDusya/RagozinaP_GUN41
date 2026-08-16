@@ -3,7 +3,7 @@ using DG.Tweening;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemies.NPCStateMachines
+namespace Assets.Scripts.NPCs.NPCStateMachines
 {
     internal class BackstepState : IState
     {

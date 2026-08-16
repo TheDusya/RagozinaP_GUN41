@@ -1076,6 +1076,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor2
       objectReference: {fileID: 0}
+    - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _path
+      value: 
+      objectReference: {fileID: 1666520980}
     - target: {fileID: 4750233748229421095, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.602851
@@ -1726,6 +1730,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor4
       objectReference: {fileID: 0}
+    - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _path
+      value: 
+      objectReference: {fileID: 1243812262}
     - target: {fileID: 4750233748229421095, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.09714925
@@ -2375,6 +2383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor3
       objectReference: {fileID: 0}
+    - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _path
+      value: 
+      objectReference: {fileID: 146112435}
     - target: {fileID: 4750233748229421095, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5971493
@@ -4587,6 +4599,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor1
       objectReference: {fileID: 0}
+    - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _path
+      value: 
+      objectReference: {fileID: 1795884160}
     - target: {fileID: 4750233748229421095, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

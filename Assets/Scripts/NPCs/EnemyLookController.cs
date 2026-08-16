@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.NPCs
 {
     [RequireComponent(typeof(NPCSignalBus))]
     public class EnemyLookController : MonoBehaviour
