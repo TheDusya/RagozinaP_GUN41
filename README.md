@@ -1,12 +1,14 @@
-ЗДЕСЬ БУДЕТ ПОЛЕЗНАЯ ИНФА!
+* управление:
 
+  * ходьба: WASD и стрелки.
+  * прицел: правая кнопка мыши.
+  * пригнуться: ctrl
+  * бежать: shift
+  * прыгать: пробел
+* что реализовано (по разделам ТЗ):
 
+&#x20;Персонаж ходит и бегает за ним ездит камера, есть индикатор здоровья, почти дореализована логика врагов (пока тоько ходят).
 
-* как собрать и запустить, версия Unity;
-* управление;
-* что реализовано (по разделам ТЗ);
-* таблица «паттерн → где → зачем»;
-* где применены Zenject и асинхронность;
 * источники ассетов (модели, анимации, звуки, эффекты) со ссылками.
 
   * Модели:
@@ -27,14 +29,7 @@ https://assetstore.unity.com/packages/3d/props/guns/low-poly-weapons-vol-1-15198
 https://niko-3d-models.itch.io/free-futuristic-weapon-assets
       * Simple low poly melee weapon pack by Donthrukat
 https://assetstore.unity.com/packages/3d/props/guns/simple-low-poly-melee-weapon-pack-396222
-    * Пикапы:
-  * Эффекты:
-
     * 
-  * UI:
-
-    * Dark UI Kit by kΩsmaragd
-https://assetstore.unity.com/packages/2d/gui/dark-ui-kit-330700
   * Шрифты:
 
     * Sjz by Denis Kukushkin
@@ -44,8 +39,6 @@ https://fonts-online.ru/fonts/sjz
     * все взяты из mixamo.com
   * Другое:
 
-    * Прицел: 
+    * Прицел:
 https://commons.wikimedia.org/wiki/File:Sniper\_sight.png
-    * Патроны:
-https://commons.wikimedia.org/wiki/File:Heavy-bullets\_-\_Delapouite\_-\_white\_-\_game-icons.svg
 
