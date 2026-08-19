@@ -40,10 +40,33 @@ namespace Netologia.Systems
 			return target;
 		}
 
+		public bool TryToReach(Unit unit, Vector3 goal)
+		{
+			unit.transform.position = Vector3.MoveTowards(unit.transform.position, goal, Time.deltaTime * unit.MoveSpeed);
+            var distance = Vector3.SqrMagnitude(unit.transform.position - goal);
+			if (distance <= _arrivalDistance)
+			{
+				unit.transform.position = goal;
+                return true;
+			}
+			return false;
+        }
+
 		public void ManualUpdate()
 		{
-			//todo Netologia homework 
-		}
+            foreach (var pair in this)
+                foreach (var unit in pair)
+                {
+					if (unit.CurrentHealth <= 0)
+						DespawnUnit(unit, unit.transform.position);
+						if (TryToReach(unit, _path[unit.PathIndex]))
+							if (++unit.PathIndex == _path.Length)
+							{
+								_director.AddPlayerDamage(_constants.UnitDamage);
+								DespawnUnit(unit, unit.transform.position);
+							}
+                }
+        }
 
 		private void DespawnUnit(Unit unit, in Vector3 position)
 		{

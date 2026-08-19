@@ -28,5 +28,8 @@ namespace Netologia.TowerDefence.Settings
 		public float FireDebuffDuration { get; private set; } =2f;
 		[field: SerializeField, Tooltip("Максимальное кол-во стаков горения")]
 		public int FireDebuffMaxStack { get; private set; } = 3;
+
+		[field: SerializeField, Tooltip("Урон игроку от юнита")]
+		public int UnitDamage { get; private set; } = 5;
 	}
 }
