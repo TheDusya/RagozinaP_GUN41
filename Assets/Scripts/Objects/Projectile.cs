@@ -36,6 +36,15 @@ namespace Netologia.TowerDefence
 			_target.CurrentHealth -= _damage;
 			_target.TryAddEffect(TimeManager.Time, _elementalType);
 		}
+
+		public void Hit()
+		{
+			if (HasEffect) 
+				HitEffect.Play();
+			if (HasSound)
+				AudioManager.PlayHit(HitSound);
+            DealDamage();
+		}
 		
 		public void ResetTarget()
 			=> (_endPosition, _target) = (_target.transform.position, null);

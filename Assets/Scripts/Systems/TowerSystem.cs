@@ -1,6 +1,7 @@
 ﻿using Netologia.Behaviours;
 using Netologia.TowerDefence;
 using Netologia.TowerDefence.Behaviors;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -13,21 +14,21 @@ namespace Netologia.Systems
 
 		public void ManualUpdate()
 		{
-			foreach (var pool in this)
+			foreach (var pool in this.ToList())
 				foreach (var tower in pool)
 				{
 					if (!tower.DecrementAttackReload(Time.deltaTime)) //on reload
-						return;
-					if (!tower.HasTarget)
+						continue;
+					if (!tower.HasTarget || Vector3.SqrMagnitude(tower.Target.transform.position - tower.transform.position) > tower.Range)
 					{
 						var unitFound = _units.FindTarget(tower.transform.position, tower.Range);
 						if (unitFound is default(Unit)) //nothing found
-							return;
+							continue;
 						else 
 							tower.Target = unitFound;
 					}
 					var newProjectile = _projectiles[tower.Projectile].Get;
-                    newProjectile.PrepareData(transform.position, tower.Target, tower.Damage, tower.AttackElemental);
+                    newProjectile.PrepareData(tower.transform.position, tower.Target, tower.Damage, tower.AttackElemental);
 					tower.Attack();
 				}
         }
