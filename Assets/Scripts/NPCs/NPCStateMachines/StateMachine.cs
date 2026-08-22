@@ -1,22 +1,17 @@
 ﻿using Assets.Scripts.Utilities;
 using System;
+using Zenject;
 
 namespace Assets.Scripts.NPCs
 {
     public abstract class StateMachine
     {
-        private IState _currentState;
+        protected IState _currentState;
         public void SwitchTo(IState newState)
         {
-            try {
-                _currentState.Exit();
-                _currentState = newState;
-                newState.Enter();
-            }
-            catch(Exception e)
-            {
-
-            }
+            _currentState.Exit();
+            _currentState = newState;
+            newState.Enter();
         }
         public void Tick() => _currentState.Tick();
     }

@@ -24,6 +24,11 @@ namespace Assets.Scripts.NPCs
                 _signalBus.OnWalk();
         }
 
+        private void Update()
+        {
+            _stateMachine.Tick();
+        }
+
         public override void SetParameters()
         {
             _maxHealth = _parameters.MaxHealth;

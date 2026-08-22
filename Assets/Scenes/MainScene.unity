@@ -1076,6 +1076,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor2
       objectReference: {fileID: 0}
+    - target: {fileID: 3473171902758989044, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: _path
       value: 
@@ -1124,6 +1128,10 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 1666520980}
+    - target: {fileID: 7338646398107475723, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _FOVRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1483,7 +1491,7 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_MinimumDistanceFromTarget: 0.1
+  m_MinimumDistanceFromTarget: 0.2
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
@@ -1730,6 +1738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor4
       objectReference: {fileID: 0}
+    - target: {fileID: 3473171902758989044, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: _path
       value: 
@@ -1778,6 +1790,10 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 1243812262}
+    - target: {fileID: 7338646398107475723, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _FOVRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2383,6 +2399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvilDoctor3
       objectReference: {fileID: 0}
+    - target: {fileID: 3473171902758989044, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3703230365450678125, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
       propertyPath: _path
       value: 
@@ -2431,6 +2451,10 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 146112435}
+    - target: {fileID: 7338646398107475723, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _FOVRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4647,6 +4671,10 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 1795884160}
+    - target: {fileID: 7338646398107475723, guid: b4e56372dc42f6244958543e65b9822b, type: 3}
+      propertyPath: _FOVRadius
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

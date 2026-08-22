@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Utilities;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -15,8 +16,9 @@ namespace Assets.Scripts.NPCs
         public ChaseState(Transform myTransform, float speed, Transform target = null)
         {
             _myTransform = myTransform;
-            _target = target;
             _speed = speed;
+            if (target != null)
+                _target = target;
         }
         public void Enter()
         {
@@ -26,11 +28,13 @@ namespace Assets.Scripts.NPCs
 
         public void Tick()
         {
-            var diff = _myTransform.position - _target.position;
-            var movementVector = diff.normalized;
-            var moveVec = movementVector * Time.deltaTime * _speed;
-            if (moveVec.sqrMagnitude > diff.sqrMagnitude && diff.sqrMagnitude > 0.001)
-                _myTransform.position += moveVec;
+            var diff = _target.position - _myTransform.position;
+            if (diff.sqrMagnitude > 0.001)
+                _myTransform.position = Vector3.MoveTowards(_myTransform.position, _target.position, Time.deltaTime * _speed);
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public void Exit() {}

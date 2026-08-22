@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Assets.Scripts.NPCs
 {
-    public class FighterStateMachine : StateMachine, ITickable, IDisposable
+    public class FighterStateMachine : StateMachine, IDisposable
     {
         NPCSignalBus _signalBus;
 
@@ -18,9 +18,7 @@ namespace Assets.Scripts.NPCs
         BackstepState _backstepState;
         DeadState _deadState;
 
-        IState _currentState;
-
-        public FighterStateMachine(Path path, Enemy me, NPCSignalBus signalBus, NPCParameters parameters)
+        public FighterStateMachine(Path path, Enemy me, NPCSignalBus signalBus, NPCParameters parameters) : base()
         {
             _signalBus = signalBus;
             _patrolState = new PatrolState(path, me.transform, me.Speed);

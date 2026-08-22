@@ -18,6 +18,7 @@ namespace Assets.Scripts.NPCs.NPCStateMachines
             _homePath = path;
             _transform = transform;
             _speed = speed;
+            _signalBus = signalBus;
         }
         public void Enter()
         {
