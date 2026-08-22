@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Utilities;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.NPCs
 {
@@ -10,6 +11,7 @@ namespace Assets.Scripts.NPCs
         float _speed;
 
         public void SetTarget(Transform target) => _target = target;
+
         public ChaseState(Transform myTransform, float speed, Transform target = null)
         {
             _myTransform = myTransform;

@@ -45,10 +45,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 1.769665
+  m_TransitionDuration: 1.1060671
   m_TransitionOffset: 0
-  m_ExitTime: 0.19406648
-  m_HasExitTime: 1
+  m_ExitTime: 0.05108982
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -229,11 +229,12 @@ AnimatorStateMachine:
   - {fileID: 4354366931195865098}
   - {fileID: 5770943032061007163}
   - {fileID: -5513718491416404246}
-  m_EntryTransitions: []
+  m_EntryTransitions:
+  - {fileID: 4854509632782235304}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 210, y: -10, z: 0}
-  m_EntryPosition: {x: -20, y: 240, z: 0}
+  m_EntryPosition: {x: 340, y: 390, z: 0}
   m_ExitPosition: {x: -130, y: 110, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 7298556447701470851}
@@ -374,14 +375,31 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 1.7949917
+  m_TransitionDuration: 1.5712261
   m_TransitionOffset: 0
-  m_ExitTime: 0.25981826
-  m_HasExitTime: 1
+  m_ExitTime: 0.04318573
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1109 &4854509632782235304
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsWalking
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5128773827338374446}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
 --- !u!1102 &5128773827338374446
 AnimatorState:
   serializedVersion: 6
@@ -390,7 +408,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Walk
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4520143142988461738}

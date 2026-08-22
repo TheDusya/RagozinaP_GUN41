@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Utilities;
+using System;
 
 namespace Assets.Scripts.NPCs
 {
@@ -7,9 +8,15 @@ namespace Assets.Scripts.NPCs
         private IState _currentState;
         public void SwitchTo(IState newState)
         {
-            _currentState.Exit();
-            _currentState = newState;
-            newState.Enter();
+            try {
+                _currentState.Exit();
+                _currentState = newState;
+                newState.Enter();
+            }
+            catch(Exception e)
+            {
+
+            }
         }
         public void Tick() => _currentState.Tick();
     }

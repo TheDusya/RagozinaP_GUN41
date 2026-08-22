@@ -9,6 +9,7 @@ namespace Assets.Scripts
     {
         LineRenderer _lineRenderer;
         public Vector3[] Points { get; private set; }
+        public bool IsSingle => Points == null || Points.Length <= 1;
 
         private void OnEnable()
         {
@@ -16,7 +17,6 @@ namespace Assets.Scripts
             var positionCount = _lineRenderer.positionCount;
             Points = new Vector3[positionCount];
             _lineRenderer.GetPositions(Points);
-            //нам нужны позиции без сдвига
             Points = Points.Select(point => new Vector3(point.x + transform.position.x, point.y, point.z + transform.position.z)).ToArray();
         }
     }

@@ -14,6 +14,7 @@ namespace Assets.Scripts.NPCs
         public event Action Walk;
         public event Action Stop;
         public event Action BackOnTrack;
+        public event Action Die;
 
         public void OnTargetDetected(Transform target) => TargetDetected?.Invoke(target);
         public void OnTargetLost() => TargetLost?.Invoke();
@@ -24,6 +25,7 @@ namespace Assets.Scripts.NPCs
         public void OnWalk() => Walk?.Invoke();
         public void OnStop() => Stop?.Invoke();
         public void OnBackOnTrack() => BackOnTrack?.Invoke();
+        public void OnDie() => Die?.Invoke();
 
     }
 }

@@ -5,17 +5,20 @@ namespace Assets.Scripts.NPCs
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(NPCSignalBus))]
-    public abstract class Enemy : Character
+    public abstract class Enemy : Character, IAttacker
     {
         [SerializeField]
         protected NavMeshAgent _agent;
         [SerializeField]
         protected Path _path;
         protected Animator _animator;
+        protected NPCAnimationController _animationController;
         protected NPCSignalBus _signalBus;
         protected StateMachine _stateMachine;
+        protected float _strikePower;
+        public float Speed { get; protected set; }
 
-        private void Start()
+        private void Awake()
         {
             _animator = GetComponent<Animator>();
             _signalBus = GetComponent<NPCSignalBus>();
@@ -26,7 +29,8 @@ namespace Assets.Scripts.NPCs
         }
         private void OnTriggerEnter(Collider other)
         {
-            //throw new System.NotImplementedException();
+            _signalBus.OnAttackMoment();
         }
+        public float GetAttackNum() => _strikePower;
     }
 }
