@@ -1,23 +1,24 @@
 ﻿using Assets.Scripts.Utilities;
 using DG.Tweening;
+using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.NPCs.NPCStateMachines
+namespace Assets.Scripts.NPCs.NPCStates
 {
-    internal class BackstepState : IState
+    public class BackstepState : IState, IDisposable
     {
-        NPCSignalBus _signalBus;
-        Path _homePath;
-        Transform _transform;
+        readonly NPCSignalBus _signalBus;
+        readonly Path _homePath;
+        readonly Transform _transform;
         Tween _movementTween = null;
-        float _speed;
+        readonly float _speed;
 
-        public BackstepState(NPCSignalBus signalBus, Path path, Transform transform, float speed)
+        public BackstepState(NPCSignalBus signalBus, Path path, Character thisCharacter)
         {
             _homePath = path;
-            _transform = transform;
-            _speed = speed;
+            _transform = thisCharacter.transform;
+            _speed = thisCharacter.Speed;
             _signalBus = signalBus;
         }
         public void Enter()
@@ -39,5 +40,6 @@ namespace Assets.Scripts.NPCs.NPCStateMachines
             _movementTween.onComplete -= _signalBus.OnBackOnTrack;
             _movementTween.Kill();
         }
+        public void Dispose() => _movementTween.onComplete -= _signalBus.OnBackOnTrack;
     }
 }

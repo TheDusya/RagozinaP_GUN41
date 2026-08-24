@@ -1,8 +1,6 @@
 ﻿using Assets.Scripts.Utilities;
-using System;
-using Zenject;
 
-namespace Assets.Scripts.NPCs
+namespace Assets.Scripts.NPCs.NPCStateMachines
 {
     public abstract class StateMachine
     {

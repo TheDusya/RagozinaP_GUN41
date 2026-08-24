@@ -1,22 +1,20 @@
 ﻿using Assets.Scripts.Utilities;
 using System;
 using UnityEngine;
-using Zenject;
 
-namespace Assets.Scripts.NPCs
+namespace Assets.Scripts.NPCs.NPCStates
 {
-    internal class ChaseState : IState
+    public class ChaseState : IState
     {
         Transform _target;
-        Transform _myTransform;
-        float _speed;
+        readonly Transform _transform;
+        readonly float _speed;
 
         public void SetTarget(Transform target) => _target = target;
-
-        public ChaseState(Transform myTransform, float speed, Transform target = null)
+        public ChaseState(Character thisCharacter, Transform target = null)
         {
-            _myTransform = myTransform;
-            _speed = speed;
+            _transform = thisCharacter.transform;
+            _speed = thisCharacter.Speed;
             if (target != null)
                 _target = target;
         }
@@ -28,9 +26,9 @@ namespace Assets.Scripts.NPCs
 
         public void Tick()
         {
-            var diff = _target.position - _myTransform.position;
+            var diff = _target.position - _transform.position;
             if (diff.sqrMagnitude > 0.001)
-                _myTransform.position = Vector3.MoveTowards(_myTransform.position, _target.position, Time.deltaTime * _speed);
+                _transform.position = Vector3.MoveTowards(_transform.position, _target.position, Time.deltaTime * _speed);
             else
             {
                 throw new NotImplementedException();

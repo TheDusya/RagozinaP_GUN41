@@ -6,16 +6,17 @@ namespace Assets.Scripts.NPCs
 {
     public class PatrolState : IState
     {
-        Vector3[] _points;
+        readonly Vector3[] _points;
         Vector3 _previousPosition;
-        Transform _transform;
+        readonly Transform _transform;
         Tween _movementTween = null;
         float _speed;
-        public PatrolState(Path path, Transform transform, float speed)
+
+        public PatrolState(Path path, Character thisCharacter)
         {
-            _transform = transform;
+            _transform = thisCharacter.transform;
             _points = path.Points;
-            _speed = speed;
+            _speed = thisCharacter.Speed;
         }
 
         private void OnPathUpdate()
@@ -31,7 +32,7 @@ namespace Assets.Scripts.NPCs
 
         public void Enter()
         {
-            _movementTween = _transform.DOPath(_points, _speed). //pointslist? No idea
+            _movementTween = _transform.DOPath(_points, _speed). //enter on random point?
                 SetLookAt(0.01f).
                 SetSpeedBased(true).
                 SetEase(Ease.Linear).

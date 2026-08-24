@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Utilities;
 
 
-namespace Assets.Scripts.NPCs.NPCStateMachines
+namespace Assets.Scripts.NPCs.NPCStates
 {
     internal class GetHitState : IState
     {

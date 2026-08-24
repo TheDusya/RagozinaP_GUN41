@@ -11,6 +11,7 @@ namespace Assets.Scripts
         protected Transform _rightSocket;
         [SerializeField, AllowsNull]
         protected Transform _leftSocket;
+        public float Speed { get; protected set; }
 
         public override abstract void Die();
     }

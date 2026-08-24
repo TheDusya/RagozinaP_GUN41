@@ -1,11 +1,9 @@
-﻿using Assets.Scripts.NPCs.NPCStateMachines;
+﻿using Assets.Scripts.NPCs.NPCStates;
 using Assets.Scripts.Parameters;
-using Assets.Scripts.Utilities;
 using System;
 using UnityEngine;
-using Zenject;
 
-namespace Assets.Scripts.NPCs
+namespace Assets.Scripts.NPCs.NPCStateMachines
 {
     public class FighterStateMachine : StateMachine, IDisposable
     {
@@ -18,14 +16,14 @@ namespace Assets.Scripts.NPCs
         BackstepState _backstepState;
         DeadState _deadState;
 
-        public FighterStateMachine(Path path, Enemy me, NPCSignalBus signalBus, NPCParameters parameters) : base()
+        public FighterStateMachine(Path path, Enemy thisCharacter, NPCSignalBus signalBus, NPCParameters parameters) : base()
         {
             _signalBus = signalBus;
-            _patrolState = new PatrolState(path, me.transform, me.Speed);
-            _chaseState = new ChaseState(me.transform, me.Speed);
-            _attackState = new AttackState(signalBus, me);
+            _patrolState = new PatrolState(path, thisCharacter);
+            _chaseState = new ChaseState(thisCharacter);
+            _attackState = new AttackState(signalBus, thisCharacter);
             _getHitState = new GetHitState();
-            _backstepState = new BackstepState(signalBus, path, me.transform, me.Speed);
+            _backstepState = new BackstepState(signalBus, path, thisCharacter);
             _deadState = new DeadState();
             _currentState = _patrolState;
             _currentState.Enter();

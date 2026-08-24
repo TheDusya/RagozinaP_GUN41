@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.NPCs.NPCStateMachines;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.NPCs
@@ -16,7 +17,6 @@ namespace Assets.Scripts.NPCs
         protected NPCSignalBus _signalBus;
         protected StateMachine _stateMachine;
         protected float _strikePower;
-        public float Speed { get; protected set; }
 
         private void Awake()
         {
@@ -24,7 +24,8 @@ namespace Assets.Scripts.NPCs
             _signalBus = GetComponent<NPCSignalBus>();
         }
         public void MoveTo(Vector3 goal)
-        { //navmesh might be used here
+        { 
+            //navmesh might be used here
             transform.position = goal;
         }
         private void OnTriggerEnter(Collider other)

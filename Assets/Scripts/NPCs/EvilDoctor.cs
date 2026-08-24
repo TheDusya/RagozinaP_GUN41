@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.NPCs;
+﻿using Assets.Scripts.NPCs.NPCStateMachines;
 using Assets.Scripts.Parameters;
 using System.Linq;
 using UnityEngine;
